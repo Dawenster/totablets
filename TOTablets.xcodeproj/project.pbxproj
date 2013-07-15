@@ -17,7 +17,7 @@
 		261EB7DD1794A1BF00BE20B6 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 261EB7DC1794A1BF00BE20B6 /* Default@2x.png */; };
 		261EB7DF1794A1BF00BE20B6 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 261EB7DE1794A1BF00BE20B6 /* Default-568h@2x.png */; };
 		261EB7E21794A1BF00BE20B6 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 261EB7E01794A1BF00BE20B6 /* MainStoryboard.storyboard */; };
-		261EB7E51794A1BF00BE20B6 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 261EB7E41794A1BF00BE20B6 /* PaymentViewController.m */; };
+		261EB7E51794A1BF00BE20B6 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 261EB7E41794A1BF00BE20B6 /* InfoViewController.m */; };
 		261EB8491794A1F500BE20B6 /* STPCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 261EB7ED1794A1F400BE20B6 /* STPCard.m */; };
 		261EB84A1794A1F500BE20B6 /* STPToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 261EB7EF1794A1F400BE20B6 /* STPToken.m */; };
 		261EB84B1794A1F500BE20B6 /* STPView.m in Sources */ = {isa = PBXBuildFile; fileRef = 261EB7F11794A1F400BE20B6 /* STPView.m */; };
@@ -56,6 +56,8 @@
 		261EB86C1794A1F500BE20B6 /* textfield@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 261EB8231794A1F400BE20B6 /* textfield@2x.png */; };
 		261EB87E1794A1F500BE20B6 /* PaymentKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 261EB8471794A1F500BE20B6 /* PaymentKit.podspec */; };
 		261EB87F1794A1F500BE20B6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 261EB8481794A1F500BE20B6 /* README.md */; };
+		261EB8881794AF6000BE20B6 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 261EB8871794AF6000BE20B6 /* PaymentViewController.m */; };
+		261EB88A1794B94200BE20B6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 261EB8891794B94200BE20B6 /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,8 +75,8 @@
 		261EB7DC1794A1BF00BE20B6 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		261EB7DE1794A1BF00BE20B6 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		261EB7E11794A1BF00BE20B6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		261EB7E31794A1BF00BE20B6 /* PaymentViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
-		261EB7E41794A1BF00BE20B6 /* PaymentViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
+		261EB7E31794A1BF00BE20B6 /* InfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
+		261EB7E41794A1BF00BE20B6 /* InfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 		261EB7EC1794A1F400BE20B6 /* STPCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPCard.h; sourceTree = "<group>"; };
 		261EB7ED1794A1F400BE20B6 /* STPCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPCard.m; sourceTree = "<group>"; };
 		261EB7EE1794A1F400BE20B6 /* STPToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPToken.h; sourceTree = "<group>"; };
@@ -128,6 +130,9 @@
 		261EB8231794A1F400BE20B6 /* textfield@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "textfield@2x.png"; sourceTree = "<group>"; };
 		261EB8471794A1F500BE20B6 /* PaymentKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PaymentKit.podspec; sourceTree = "<group>"; };
 		261EB8481794A1F500BE20B6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		261EB8861794AF6000BE20B6 /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
+		261EB8871794AF6000BE20B6 /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
+		261EB8891794B94200BE20B6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +140,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				261EB88A1794B94200BE20B6 /* QuartzCore.framework in Frameworks */,
 				261EB7C91794A1BF00BE20B6 /* UIKit.framework in Frameworks */,
 				261EB7CB1794A1BF00BE20B6 /* Foundation.framework in Frameworks */,
 				261EB7CD1794A1BF00BE20B6 /* CoreGraphics.framework in Frameworks */,
@@ -147,6 +153,7 @@
 		261EB7BC1794A1BF00BE20B6 = {
 			isa = PBXGroup;
 			children = (
+				261EB8891794B94200BE20B6 /* QuartzCore.framework */,
 				261EB7CE1794A1BF00BE20B6 /* TOTablets */,
 				261EB7C71794A1BF00BE20B6 /* Frameworks */,
 				261EB7C61794A1BF00BE20B6 /* Products */,
@@ -178,8 +185,10 @@
 				261EB7D71794A1BF00BE20B6 /* AppDelegate.h */,
 				261EB7D81794A1BF00BE20B6 /* AppDelegate.m */,
 				261EB7E01794A1BF00BE20B6 /* MainStoryboard.storyboard */,
-				261EB7E31794A1BF00BE20B6 /* PaymentViewController.h */,
-				261EB7E41794A1BF00BE20B6 /* PaymentViewController.m */,
+				261EB7E31794A1BF00BE20B6 /* InfoViewController.h */,
+				261EB7E41794A1BF00BE20B6 /* InfoViewController.m */,
+				261EB8861794AF6000BE20B6 /* PaymentViewController.h */,
+				261EB8871794AF6000BE20B6 /* PaymentViewController.m */,
 				261EB7CF1794A1BF00BE20B6 /* Supporting Files */,
 			);
 			path = TOTablets;
@@ -392,7 +401,7 @@
 			files = (
 				261EB7D51794A1BF00BE20B6 /* main.m in Sources */,
 				261EB7D91794A1BF00BE20B6 /* AppDelegate.m in Sources */,
-				261EB7E51794A1BF00BE20B6 /* PaymentViewController.m in Sources */,
+				261EB7E51794A1BF00BE20B6 /* InfoViewController.m in Sources */,
 				261EB8491794A1F500BE20B6 /* STPCard.m in Sources */,
 				261EB84A1794A1F500BE20B6 /* STPToken.m in Sources */,
 				261EB84B1794A1F500BE20B6 /* STPView.m in Sources */,
@@ -406,6 +415,7 @@
 				261EB8551794A1F500BE20B6 /* PKTextField.m in Sources */,
 				261EB8561794A1F500BE20B6 /* PKUSAddressZip.m in Sources */,
 				261EB8571794A1F500BE20B6 /* PKView.m in Sources */,
+				261EB8881794AF6000BE20B6 /* PaymentViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

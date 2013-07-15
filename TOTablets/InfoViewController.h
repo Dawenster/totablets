@@ -1,5 +1,5 @@
 //
-//  PaymentViewController.h
+//  ViewController.h
 //  TOTablets
 //
 //  Created by David Wen on 2013-07-15.
@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "STPCard.h"
 
-@interface PaymentViewController : UITableViewController
+@interface InfoViewController : UIViewController
+
+@property (strong, nonatomic) STPCard* stripeCard;
 
 @end

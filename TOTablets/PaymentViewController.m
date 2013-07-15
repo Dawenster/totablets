@@ -6,13 +6,13 @@
 //  Copyright (c) 2013 TOTablets. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "PaymentViewController.h"
 
-@interface ViewController ()
+@interface PaymentViewController ()
 
 @end
 
-@implementation ViewController
+@implementation PaymentViewController
 
 - (void)viewDidLoad
 {

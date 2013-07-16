@@ -7,6 +7,7 @@
 //
 
 #import "PaymentViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @interface PaymentViewController ()
 
@@ -26,12 +27,29 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+        self.stripeView = [[STPView alloc] initWithFrame:CGRectMake(455,372,290,55)
+                                                  andKey:@"pk_test_mHRnRqLpMebdwnbKedxjzUvf"];
+    } else {
+        self.stripeView = [[STPView alloc] initWithFrame:CGRectMake(715,372,290,55)
+                                                  andKey:@"pk_test_mHRnRqLpMebdwnbKedxjzUvf"];
+    }
+    
+    self.stripeView.delegate = self;
+    [self.view addSubview:self.stripeView];
+}
 
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
+        self.stripeView.frame = CGRectMake(455,372,290,55);
+    } else {
+        self.stripeView.frame = CGRectMake(715,372,290,55);
+    }
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning

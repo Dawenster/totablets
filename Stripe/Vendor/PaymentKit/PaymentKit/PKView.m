@@ -128,11 +128,11 @@
 
 - (void)setupCardNumberField
 {
-    cardNumberField = [[PKTextField alloc] initWithFrame:CGRectMake(12,0,170,20)];
+    cardNumberField = [[PKTextField alloc] initWithFrame:CGRectMake(12,0,220,20)];
     
     cardNumberField.delegate = self;
     
-    cardNumberField.placeholder = @"1234 5678 9012 3456";
+    cardNumberField.placeholder = @"1234 5678 9012 3456 (tap)";
     cardNumberField.keyboardType = UIKeyboardTypeNumberPad;
     cardNumberField.textColor = DarkGreyColor;
     cardNumberField.font = DefaultBoldFont;

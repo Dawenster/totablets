@@ -14,6 +14,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 const int rentalFee = 25;
 const int GST = 5;
 const int PST = 7;
+NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 
 @interface PaymentViewController ()
 
@@ -29,31 +30,20 @@ const int PST = 7;
     NSString *locationName;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
-{
-    if ((self = [super initWithCoder:aDecoder])) {
-        locationName = @"Shangri-La, Vancouver";
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
-        self.stripeView = [[STPView alloc] initWithFrame:StripePortraitLocation
-                                                  andKey:@"pk_test_mHRnRqLpMebdwnbKedxjzUvf"];
+        self.stripeView = [[STPView alloc] initWithFrame:StripePortraitLocation andKey:publishableKey];
     } else {
-        self.stripeView = [[STPView alloc] initWithFrame:StripeLandscapeLocation
-                                                  andKey:@"pk_test_mHRnRqLpMebdwnbKedxjzUvf"];
+        self.stripeView = [[STPView alloc] initWithFrame:StripeLandscapeLocation andKey:publishableKey];
     }
-    
     self.stripeView.delegate = self;
     [self.view addSubview:self.stripeView];
     
     self.payButton.enabled = NO;
-    
+    locationName = @"Shangri-La, Vancouver";
     self.locationLabel.text = locationName;
 
     taxesByLocation = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -84,6 +74,7 @@ const int PST = 7;
 
 - (void)updateLabels;
 {
+    self.locationLabel.text = locationName;
     float subtotal = rentalFee * [self.stepper value];
     int tax = [taxesByLocation[self.locationLabel.text][1] integerValue];
     float taxAmount = subtotal * tax / 100.0;
@@ -98,7 +89,6 @@ const int PST = 7;
     } else {
         self.daysLabel.text = [NSString stringWithFormat:@"%0.0f days, ending on %@", days, endDateString];
     }
-//    self.locationLabel.text = 
     self.subtotalLabel.text = [NSString stringWithFormat:@"Sub-total (%0.0f days x $%d per day):", days, rentalFee];
     self.subtotalAmount.text = [NSString stringWithFormat:@"$%.02f CAD", subtotal];
     self.taxesLabel.text = [NSString stringWithFormat:@"Taxes (%@):", taxesByLocation[self.locationLabel.text][0]];
@@ -221,7 +211,6 @@ const int PST = 7;
 - (void)locationPicker:(LocationPickerViewController *)picker didPickLocation:(NSString *)theLocationName
 {
     locationName = theLocationName;
-    self.locationLabel.text = locationName;
     [self updateLabels];
 }
 

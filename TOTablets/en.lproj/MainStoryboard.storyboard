@@ -14,6 +14,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="G9k-xJ-emL">
                                 <rect key="frame" x="322" y="780" width="125" height="44"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Rent this iPad">
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -108,8 +109,8 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </label>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Shangri-La Vancouver" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xQm-iF-CTh">
-                                                    <rect key="frame" x="478" y="11" width="170" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Shangri-La, Vancouver" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xQm-iF-CTh">
+                                                    <rect key="frame" x="474" y="11" width="174" height="21"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.2196078431372549" green="0.32941176470588235" blue="0.52941176470588236" alpha="1" colorSpace="calibratedRGB"/>
@@ -118,6 +119,9 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <connections>
+                                            <segue destination="yq8-IB-Fwo" kind="modal" identifier="PickLocation" id="DxO-cE-I8G"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" id="Gv3-C5-hY2">
                                         <rect key="frame" x="0.0" y="213" width="768" height="45"/>
@@ -337,7 +341,7 @@
                     <connections>
                         <outlet property="daysLabel" destination="TPh-pK-gYu" id="KID-iN-d1R"/>
                         <outlet property="grandTotalAmount" destination="ZQe-NZ-f7Z" id="jmH-rc-5iI"/>
-                        <outlet property="location" destination="xQm-iF-CTh" id="WMM-mr-H22"/>
+                        <outlet property="locationLabel" destination="xQm-iF-CTh" id="9p6-ix-BTW"/>
                         <outlet property="payButton" destination="UVt-en-JVE" id="03e-r6-1Fp"/>
                         <outlet property="stepper" destination="w82-ij-HQq" id="RQU-hy-adj"/>
                         <outlet property="subtotalAmount" destination="OkX-P9-lfk" id="wvo-YY-rty"/>
@@ -350,7 +354,78 @@
             </objects>
             <point key="canvasLocation" x="931" y="-129"/>
         </scene>
+        <!--Location Picker View Controller - Choose location-->
+        <scene sceneID="pus-qH-4IP">
+            <objects>
+                <tableViewController id="38M-gi-COd" customClass="LocationPickerViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="YLe-RI-ZcF">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="38M-gi-COd" id="ukw-ba-HYU"/>
+                            <outlet property="delegate" destination="38M-gi-COd" id="NFh-4A-vH3"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Choose location" id="JKk-I3-teq">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="6YZ-K4-cbK">
+                            <connections>
+                                <action selector="cancel:" destination="38M-gi-COd" id="xCs-rp-dgc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Nus-Nh-m8A" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2909" y="-129"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="I2J-e6-3IR">
+            <objects>
+                <navigationController id="yq8-IB-Fwo" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7Oe-lY-vqu">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="38M-gi-COd" kind="relationship" relationship="rootViewController" id="Udq-hs-i4T"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="I2u-bn-uch" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1935" y="-129"/>
+        </scene>
     </scenes>
+    <classes>
+        <class className="InfoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/InfoViewController.h"/>
+        </class>
+        <class className="LocationPickerViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LocationPickerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+            </relationships>
+        </class>
+        <class className="PaymentViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PaymentViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="changeDays"/>
+                <relationship kind="action" name="pay"/>
+                <relationship kind="outlet" name="daysLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="grandTotalAmount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="locationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="stepper" candidateClass="UIStepper"/>
+                <relationship kind="outlet" name="subtotalAmount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="subtotalLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taxesAmount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taxesLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

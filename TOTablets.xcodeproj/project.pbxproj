@@ -58,6 +58,7 @@
 		261EB87F1794A1F500BE20B6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 261EB8481794A1F500BE20B6 /* README.md */; };
 		261EB8881794AF6000BE20B6 /* PaymentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 261EB8871794AF6000BE20B6 /* PaymentViewController.m */; };
 		261EB88A1794B94200BE20B6 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 261EB8891794B94200BE20B6 /* QuartzCore.framework */; };
+		261EB88E1796141200BE20B6 /* LocationPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 261EB88D1796141200BE20B6 /* LocationPickerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -133,6 +134,8 @@
 		261EB8861794AF6000BE20B6 /* PaymentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentViewController.h; sourceTree = "<group>"; };
 		261EB8871794AF6000BE20B6 /* PaymentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentViewController.m; sourceTree = "<group>"; };
 		261EB8891794B94200BE20B6 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		261EB88C1796141200BE20B6 /* LocationPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationPickerViewController.h; sourceTree = "<group>"; };
+		261EB88D1796141200BE20B6 /* LocationPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationPickerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,6 +192,8 @@
 				261EB7E41794A1BF00BE20B6 /* InfoViewController.m */,
 				261EB8861794AF6000BE20B6 /* PaymentViewController.h */,
 				261EB8871794AF6000BE20B6 /* PaymentViewController.m */,
+				261EB88C1796141200BE20B6 /* LocationPickerViewController.h */,
+				261EB88D1796141200BE20B6 /* LocationPickerViewController.m */,
 				261EB7CF1794A1BF00BE20B6 /* Supporting Files */,
 			);
 			path = TOTablets;
@@ -416,6 +421,7 @@
 				261EB8561794A1F500BE20B6 /* PKUSAddressZip.m in Sources */,
 				261EB8571794A1F500BE20B6 /* PKView.m in Sources */,
 				261EB8881794AF6000BE20B6 /* PaymentViewController.m in Sources */,
+				261EB88E1796141200BE20B6 /* LocationPickerViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

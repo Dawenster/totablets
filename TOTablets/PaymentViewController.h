@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "STPView.h"
+#import "LocationPickerViewController.h"
 
-@interface PaymentViewController : UITableViewController <STPViewDelegate>
+@interface PaymentViewController : UITableViewController <STPViewDelegate, LocationPickerViewControllerDelegate>
 
 @property (nonatomic, strong) IBOutlet UILabel *daysLabel;
-@property (nonatomic, strong) IBOutlet UILabel *location;
+@property (nonatomic, strong) IBOutlet UILabel *locationLabel;
 @property STPView* stripeView;
 @property (nonatomic, strong) IBOutlet UIButton *payButton;
 @property (nonatomic, weak) IBOutlet UIStepper *stepper;

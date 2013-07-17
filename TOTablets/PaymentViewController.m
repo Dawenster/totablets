@@ -23,17 +23,16 @@ const int PST = 7;
     NSString *locationDetail;
     NSString *name;
     NSString *email;
-    NSArray *locations;
     NSDictionary *taxesByLocation;
     NSDate *startDate;
     NSDate *endDate;
+    NSString *locationName;
 }
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithStyle:style];
-    if (self) {
-        // Custom initialization
+    if ((self = [super initWithCoder:aDecoder])) {
+        locationName = @"Shangri-La, Vancouver";
     }
     return self;
 }
@@ -55,8 +54,7 @@ const int PST = 7;
     
     self.payButton.enabled = NO;
     
-    locations = @[@"Shangri-La, Vancouver", @"Nuvo Hotel, Calgary"];
-    self.location = locations[0];
+    self.locationLabel.text = locationName;
 
     taxesByLocation = [NSDictionary dictionaryWithObjectsAndKeys:
                                     @[@"GST + PST", [NSNumber numberWithInteger:(GST + PST)]], @"Shangri-La, Vancouver",
@@ -87,7 +85,7 @@ const int PST = 7;
 - (void)updateLabels;
 {
     float subtotal = rentalFee * [self.stepper value];
-    int tax = [taxesByLocation[self.location][1] integerValue];
+    int tax = [taxesByLocation[self.locationLabel.text][1] integerValue];
     float taxAmount = subtotal * tax / 100.0;
     float grandTotal = subtotal + taxAmount;
     float days = [self.stepper value];
@@ -100,9 +98,10 @@ const int PST = 7;
     } else {
         self.daysLabel.text = [NSString stringWithFormat:@"%0.0f days, ending on %@", days, endDateString];
     }
+//    self.locationLabel.text = 
     self.subtotalLabel.text = [NSString stringWithFormat:@"Sub-total (%0.0f days x $%d per day):", days, rentalFee];
     self.subtotalAmount.text = [NSString stringWithFormat:@"$%.02f CAD", subtotal];
-    self.taxesLabel.text = [NSString stringWithFormat:@"Taxes (%@):", taxesByLocation[self.location][0]];
+    self.taxesLabel.text = [NSString stringWithFormat:@"Taxes (%@):", taxesByLocation[self.locationLabel.text][0]];
     self.taxesAmount.text = [NSString stringWithFormat:@"(%d%%) $%.02f CAD", tax, taxAmount];
     self.grandTotalAmount.text = [NSString stringWithFormat:@"$%.02f CAD", grandTotal];
 }
@@ -148,6 +147,8 @@ const int PST = 7;
         } else {
             // Send off token to your server
             [self handleToken:token];
+            // Send name to own server
+            // NSString *deviceUDID = [[UIDevice currentDevice] name];
         }
     }];
 }
@@ -205,6 +206,23 @@ const int PST = 7;
     
     NSString *endDateString = [NSString stringWithFormat:@"%@ at %@", dateAsString, timeAsString];
     return endDateString;
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"PickLocation"]) {
+        UINavigationController *navigationController = segue.destinationViewController;
+        LocationPickerViewController *controller = (LocationPickerViewController *)navigationController.topViewController;
+        controller.delegate = self;
+        controller.selectedLocationName = locationName;
+    }
+}
+
+- (void)locationPicker:(LocationPickerViewController *)picker didPickLocation:(NSString *)theLocationName
+{
+    locationName = theLocationName;
+    self.locationLabel.text = locationName;
+    [self updateLabels];
 }
 
 @end

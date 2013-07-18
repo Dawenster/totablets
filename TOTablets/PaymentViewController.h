@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "STPView.h"
 #import "LocationPickerViewController.h"
+#import "MBProgressHUD.h"
 
-@interface PaymentViewController : UITableViewController <STPViewDelegate, LocationPickerViewControllerDelegate>
+@interface PaymentViewController : UITableViewController <STPViewDelegate, LocationPickerViewControllerDelegate> {
+    MBProgressHUD *HUD;
+}
 
 @property (nonatomic, strong) IBOutlet UILabel *daysLabel;
 @property (nonatomic, strong) IBOutlet UILabel *locationLabel;

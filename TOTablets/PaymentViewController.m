@@ -8,6 +8,7 @@
 
 #import "PaymentViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import "Reachability.h"
 
 const CGRect StripePortraitLocation = { { 452.0f, 395.0f }, { 290.0f, 55.0f } };
 const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } };
@@ -133,6 +134,21 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 
 - (IBAction)pay;
 {
+    if ([self reachable]) {
+        HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        HUD.labelText = @"Processing payment";
+        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self stripeCall];
+            });
+        });
+    } else {
+        [self noConnectionError];
+    }
+}
+
+- (void)stripeCall
+{
     // Call 'createToken' when the save button is tapped
     [self.stripeView createToken:^(STPToken *token, NSError *error) {
         if (error) {
@@ -167,10 +183,17 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                if (error) {
-                                   // Handle error
+                                   [HUD hide:YES];
+                                   NSLog(@"Error: %@", [error localizedDescription]);
+                                   [self handleError:error];
+                               } else {
+                                   // Image based on the work by pixelpressicons.com, http://creativecommons.org/licenses/by/2.5/ca/
+                                   HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+                                   HUD.mode = MBProgressHUDModeCustomView;
+                                   HUD.labelText = @"Completed";
+                                   NSLog(@"Response: %@", response.description);
+                                   [HUD hide:YES afterDelay:2];
                                }
-                               NSLog(@"Response: %@", response.description);
-                               NSLog(@"Error: %@", error);
                            }];
 }
 
@@ -178,6 +201,16 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 {
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
                                                       message:[error localizedDescription]
+                                                     delegate:nil
+                                            cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                            otherButtonTitles:nil];
+    [message show];
+}
+
+- (void)noConnectionError
+{
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                      message:@"No internet connection - please see the front desk for assistance."
                                                      delegate:nil
                                             cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
                                             otherButtonTitles:nil];
@@ -225,6 +258,15 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 {
     locationName = theLocationName;
     [self updateLabels];
+}
+
+- (BOOL)reachable {
+    Reachability *r = [Reachability reachabilityWithHostName:@"google.com"];
+    NetworkStatus internetStatus = [r currentReachabilityStatus];
+    if(internetStatus == NotReachable) {
+        return NO;
+    }
+    return YES;
 }
 
 @end

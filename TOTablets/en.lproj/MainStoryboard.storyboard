@@ -151,7 +151,7 @@
                             </tableViewSection>
                             <tableViewSection headerTitle="Payment information" id="wxs-DV-2GB">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" id="GoV-Dq-dIb">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" id="GoV-Dq-dIb">
                                         <rect key="frame" x="0.0" y="302" width="768" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">

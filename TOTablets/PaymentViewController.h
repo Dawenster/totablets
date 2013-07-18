@@ -14,6 +14,9 @@
 
 @property (nonatomic, strong) IBOutlet UILabel *daysLabel;
 @property (nonatomic, strong) IBOutlet UILabel *locationLabel;
+@property (nonatomic, strong) IBOutlet UITextField *locationDetailField;
+@property (nonatomic, strong) IBOutlet UITextField *nameField;
+@property (nonatomic, strong) IBOutlet UITextField *emailField;
 @property STPView* stripeView;
 @property (nonatomic, strong) IBOutlet UIButton *payButton;
 @property (nonatomic, weak) IBOutlet UIStepper *stepper;

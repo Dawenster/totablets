@@ -11,7 +11,7 @@
 
 const CGRect StripePortraitLocation = { { 452.0f, 395.0f }, { 290.0f, 55.0f } };
 const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } };
-const int rentalFee = 25;
+const int rentalFee = 2500;
 const int GST = 5;
 const int PST = 7;
 NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
@@ -21,13 +21,16 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 @end
 
 @implementation PaymentViewController {
-    NSString *locationDetail;
-    NSString *name;
-    NSString *email;
     NSDictionary *taxesByLocation;
     NSDate *startDate;
     NSDate *endDate;
     NSString *locationName;
+    NSString *currency;
+    float days;
+    float subtotal;
+    int tax;
+    float taxAmount;
+    float grandTotal;
 }
 
 - (void)viewDidLoad
@@ -47,8 +50,8 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
     self.locationLabel.text = locationName;
 
     taxesByLocation = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    @[@"GST + PST", [NSNumber numberWithInteger:(GST + PST)]], @"Shangri-La, Vancouver",
-                                    @[@"GST", [NSNumber numberWithInteger:GST]], @"Nuvo Hotel, Calgary"
+                                    @[@"GST and PST", [NSNumber numberWithInteger:(GST + PST)], @"CAD"], @"Shangri-La, Vancouver",
+                                    @[@"GST", [NSNumber numberWithInteger:GST], @"CAD"], @"Nuvo Hotel, Calgary"
                                     ,nil];
     
     [self updateLabels];
@@ -75,11 +78,12 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 - (void)updateLabels;
 {
     self.locationLabel.text = locationName;
-    float subtotal = rentalFee * [self.stepper value];
-    int tax = [taxesByLocation[self.locationLabel.text][1] integerValue];
-    float taxAmount = subtotal * tax / 100.0;
-    float grandTotal = subtotal + taxAmount;
-    float days = [self.stepper value];
+    days = [self.stepper value];
+    subtotal = rentalFee * days;
+    tax = [taxesByLocation[self.locationLabel.text][1] integerValue];
+    taxAmount = subtotal * tax / 100.0;
+    grandTotal = subtotal + taxAmount;
+    currency = taxesByLocation[self.locationLabel.text][2];
     
     startDate = [NSDate date];
     NSString *endDateString = [self formatDate:startDate];
@@ -89,11 +93,11 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
     } else {
         self.daysLabel.text = [NSString stringWithFormat:@"%0.0f days, ending on %@", days, endDateString];
     }
-    self.subtotalLabel.text = [NSString stringWithFormat:@"Sub-total (%0.0f days x $%d per day):", days, rentalFee];
-    self.subtotalAmount.text = [NSString stringWithFormat:@"$%.02f CAD", subtotal];
+    self.subtotalLabel.text = [NSString stringWithFormat:@"Sub-total (%0.0f days x $%d per day):", days, rentalFee / 100];
+    self.subtotalAmount.text = [NSString stringWithFormat:@"$%.02f %@", subtotal / 100, currency];
     self.taxesLabel.text = [NSString stringWithFormat:@"Taxes (%@):", taxesByLocation[self.locationLabel.text][0]];
-    self.taxesAmount.text = [NSString stringWithFormat:@"(%d%%) $%.02f CAD", tax, taxAmount];
-    self.grandTotalAmount.text = [NSString stringWithFormat:@"$%.02f CAD", grandTotal];
+    self.taxesAmount.text = [NSString stringWithFormat:@"(%d%%) $%.02f %@", tax, taxAmount / 100.0, currency];
+    self.grandTotalAmount.text = [NSString stringWithFormat:@"$%.02f %@", grandTotal / 100.0, currency];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -146,11 +150,18 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 - (void)handleToken:(STPToken *)token
 {
     NSLog(@"Received token %@", token.tokenId);
+    NSString *deviceUDID = [[UIDevice currentDevice] name];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://example.com"]];
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.totablets.com/rentals"]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/rentals"]];
     request.HTTPMethod = @"POST";
-    NSString *body     = [NSString stringWithFormat:@"stripeToken=%@", token.tokenId];
-    request.HTTPBody   = [body dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&start_date=%@&end_date=%@&location=%@&location_detail=%@&name=%@&email=%@&stripe_token=%@&rate=%d&subtotal=%0.0f&tax_names=%@&tax_percentage=%d&tax_amount=%0.0f&grand_total=%0.0f&currency=%@&device_name=%@",
+                          days, startDate, endDate, self.locationLabel.text, self.locationDetailField.text, self.nameField.text, self.emailField.text, token.tokenId, rentalFee, subtotal, taxesByLocation[self.locationLabel.text][0], tax, taxAmount, grandTotal, currency, deviceUDID];
+    NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"Escaped Body: %@", escapedBody);
+    
+    request.HTTPBody   = [escapedBody dataUsingEncoding:NSUTF8StringEncoding];
     
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
@@ -158,6 +169,8 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
                                if (error) {
                                    // Handle error
                                }
+                               NSLog(@"Response: %@", response.description);
+                               NSLog(@"Error: %@", error);
                            }];
 }
 

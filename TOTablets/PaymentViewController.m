@@ -174,8 +174,8 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.totablets.com/rentals"]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/rentals"]];
     request.HTTPMethod = @"POST";
-    NSString *body     = [NSString stringWithFormat:@"name=%@&email=%@&stripe_token=%@&grand_total=%0.0f&currency=%@",
-                          self.nameField.text, self.emailField.text, token.tokenId, grandTotal, currency];
+    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&location=%@&rate=%d&tax_names=%@&name=%@&email=%@&stripe_token=%@&grand_total=%0.0f&currency=%@",
+                          days, self.locationLabel.text, rentalFee, taxesByLocation[self.locationLabel.text][0], self.nameField.text, self.emailField.text, token.tokenId, grandTotal, currency];
     NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSLog(@"Escaped Body: %@", escapedBody);

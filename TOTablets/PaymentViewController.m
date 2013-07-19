@@ -165,19 +165,22 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 
 - (void)handleToken:(STPToken *)token
 {
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        [self sendCustomerData:token];
+    });
+    
     NSLog(@"Received token %@", token.tokenId);
-    NSString *deviceUDID = [[UIDevice currentDevice] name];
     
 //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.totablets.com/rentals"]];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/rentals"]];
     request.HTTPMethod = @"POST";
-    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&start_date=%@&end_date=%@&location=%@&location_detail=%@&name=%@&email=%@&stripe_token=%@&rate=%d&subtotal=%0.0f&tax_names=%@&tax_percentage=%d&tax_amount=%0.0f&grand_total=%0.0f&currency=%@&device_name=%@",
-                          days, startDate, endDate, self.locationLabel.text, self.locationDetailField.text, self.nameField.text, self.emailField.text, token.tokenId, rentalFee, subtotal, taxesByLocation[self.locationLabel.text][0], tax, taxAmount, grandTotal, currency, deviceUDID];
+    NSString *body     = [NSString stringWithFormat:@"name=%@&email=%@&stripe_token=%@&grand_total=%0.0f&currency=%@",
+                          self.nameField.text, self.emailField.text, token.tokenId, grandTotal, currency];
     NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSLog(@"Escaped Body: %@", escapedBody);
     
-    request.HTTPBody   = [escapedBody dataUsingEncoding:NSUTF8StringEncoding];
+    request.HTTPBody = [escapedBody dataUsingEncoding:NSUTF8StringEncoding];
     
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
@@ -193,6 +196,30 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
                                    HUD.labelText = @"Completed";
                                    NSLog(@"Response: %@", response.description);
                                    [HUD hide:YES afterDelay:2];
+                               }
+                           }];
+}
+
+- (void)sendCustomerData:(STPToken *)token
+{
+    NSString *deviceUDID = [[UIDevice currentDevice] name];
+    
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.totablets.com/capture_customer_data"]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/capture_customer_data"]];
+    request.HTTPMethod = @"POST";
+    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&start_date=%@&end_date=%@&location=%@&location_detail=%@&email=%@&rate=%d&subtotal=%0.0f&tax_names=%@&tax_percentage=%d&tax_amount=%0.0f&grand_total=%0.0f&currency=%@&device_name=%@",
+                          days, startDate, endDate, self.locationLabel.text, self.locationDetailField.text, self.emailField.text, rentalFee, subtotal, taxesByLocation[self.locationLabel.text][0], tax, taxAmount, grandTotal, currency, deviceUDID];
+    NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"Send Customer Data Escaped Body: %@", escapedBody);
+    
+    request.HTTPBody = [escapedBody dataUsingEncoding:NSUTF8StringEncoding];
+    
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:[NSOperationQueue mainQueue]
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               if (error) {
+                                   NSLog(@"%@", error.localizedDescription);
                                }
                            }];
 }

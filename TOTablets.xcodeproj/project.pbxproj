@@ -63,6 +63,7 @@
 		261EB894179858E900BE20B6 /* 37x-Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 261EB892179858E900BE20B6 /* 37x-Checkmark@2x.png */; };
 		261EB897179864E200BE20B6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 261EB896179864E200BE20B6 /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		261EB8991798650200BE20B6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 261EB8981798650200BE20B6 /* SystemConfiguration.framework */; };
+		261EB89C1799C78A00BE20B6 /* PaymentCompleteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 261EB89B1799C78A00BE20B6 /* PaymentCompleteViewController.m */; };
 		FCEA7D3EE4DC4DEBB8A30A17 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 728945963DC040FD857A8471 /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -146,6 +147,8 @@
 		261EB895179864E200BE20B6 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		261EB896179864E200BE20B6 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		261EB8981798650200BE20B6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		261EB89A1799C78A00BE20B6 /* PaymentCompleteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaymentCompleteViewController.h; sourceTree = "<group>"; };
+		261EB89B1799C78A00BE20B6 /* PaymentCompleteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaymentCompleteViewController.m; sourceTree = "<group>"; };
 		728945963DC040FD857A8471 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8016467A315A4C2787C2C935 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -213,6 +216,8 @@
 				261EB8871794AF6000BE20B6 /* PaymentViewController.m */,
 				261EB88C1796141200BE20B6 /* LocationPickerViewController.h */,
 				261EB88D1796141200BE20B6 /* LocationPickerViewController.m */,
+				261EB89A1799C78A00BE20B6 /* PaymentCompleteViewController.h */,
+				261EB89B1799C78A00BE20B6 /* PaymentCompleteViewController.m */,
 				261EB7CF1794A1BF00BE20B6 /* Supporting Files */,
 				261EB890179858E900BE20B6 /* Images */,
 			);
@@ -489,6 +494,7 @@
 				261EB8881794AF6000BE20B6 /* PaymentViewController.m in Sources */,
 				261EB88E1796141200BE20B6 /* LocationPickerViewController.m in Sources */,
 				261EB897179864E200BE20B6 /* Reachability.m in Sources */,
+				261EB89C1799C78A00BE20B6 /* PaymentCompleteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

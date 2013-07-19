@@ -171,8 +171,8 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
     
     NSLog(@"Received token %@", token.tokenId);
     
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.totablets.com/rentals"]];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/rentals"]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.totablets.com/rentals"]];
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/rentals"]];
     request.HTTPMethod = @"POST";
     NSString *body     = [NSString stringWithFormat:@"days=%0.0f&location=%@&rate=%d&tax_names=%@&name=%@&email=%@&stripe_token=%@&grand_total=%0.0f&currency=%@",
                           days, self.locationLabel.text, rentalFee, taxesByLocation[self.locationLabel.text][0], self.nameField.text, self.emailField.text, token.tokenId, grandTotal, currency];
@@ -193,7 +193,12 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
                                    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
                                    HUD.mode = MBProgressHUDModeCustomView;
                                    HUD.labelText = @"Completed";
-                                   [HUD hide:YES afterDelay:2];
+                                   
+                                   double delayInSeconds = 2.0;
+                                   dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                                   dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                       [self performSegueWithIdentifier:@"PaymentComplete" sender:nil];
+                                   });
                                } else {
                                    [HUD hide:YES];
                                    NSLog(@"Error: %@", [error localizedDescription]);
@@ -206,8 +211,8 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 {
     NSString *deviceUDID = [[UIDevice currentDevice] name];
     
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.totablets.com/capture_customer_data"]];
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/capture_customer_data"]];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.totablets.com/capture_customer_data"]];
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/capture_customer_data"]];
     request.HTTPMethod = @"POST";
     NSString *body     = [NSString stringWithFormat:@"days=%0.0f&start_date=%@&end_date=%@&location=%@&location_detail=%@&email=%@&rate=%d&subtotal=%0.0f&tax_names=%@&tax_percentage=%d&tax_amount=%0.0f&grand_total=%0.0f&currency=%@&device_name=%@",
                           days, startDate, endDate, self.locationLabel.text, self.locationDetailField.text, self.emailField.text, rentalFee, subtotal, taxesByLocation[self.locationLabel.text][0], tax, taxAmount, grandTotal, currency, deviceUDID];

@@ -139,6 +139,7 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
         HUD.labelText = @"Processing payment";
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             dispatch_async(dispatch_get_main_queue(), ^{
+                self.responseData = [NSMutableData data];
                 [self stripeCall];
             });
         });
@@ -153,12 +154,11 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
     [self.stripeView createToken:^(STPToken *token, NSError *error) {
         if (error) {
             // Handle error
+            [HUD hide:YES];
             [self handleError:error];
         } else {
             // Send off token to your server
             [self handleToken:token];
-            // Send name to own server
-            // NSString *deviceUDID = [[UIDevice currentDevice] name];
         }
     }];
 }
@@ -185,17 +185,19 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue mainQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               if (error) {
-                                   [HUD hide:YES];
-                                   NSLog(@"Error: %@", [error localizedDescription]);
-                                   [self handleError:error];
-                               } else {
+                               NSError *myError = nil;
+                               NSDictionary *res = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&myError];
+                               
+                               if ([res[@"stripe_error"] isEqualToString:@"None"]) {
                                    // Image based on the work by pixelpressicons.com, http://creativecommons.org/licenses/by/2.5/ca/
                                    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
                                    HUD.mode = MBProgressHUDModeCustomView;
                                    HUD.labelText = @"Completed";
-                                   NSLog(@"Response: %@", response.description);
                                    [HUD hide:YES afterDelay:2];
+                               } else {
+                                   [HUD hide:YES];
+                                   NSLog(@"Error: %@", [error localizedDescription]);
+                                   [self handleErrorWithString:res[@"stripe_error"]];
                                }
                            }];
 }
@@ -228,6 +230,16 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 {
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
                                                       message:[error localizedDescription]
+                                                     delegate:nil
+                                            cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                            otherButtonTitles:nil];
+    [message show];
+}
+
+- (void)handleErrorWithString:(NSString *)errorMessage
+{
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                      message:errorMessage
                                                      delegate:nil
                                             cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
                                             otherButtonTitles:nil];

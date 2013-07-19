@@ -28,6 +28,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *taxesLabel;
 @property (nonatomic, strong) IBOutlet UILabel *taxesAmount;
 @property (nonatomic, strong) IBOutlet UILabel *grandTotalAmount;
+@property (nonatomic, strong) NSMutableData *responseData;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)changeDays;

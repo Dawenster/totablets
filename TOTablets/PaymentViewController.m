@@ -38,6 +38,8 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 {
     [super viewDidLoad];
     
+    [[UIApplication sharedApplication] setStatusBarHidden:NO];
+    
     if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
         self.stripeView = [[STPView alloc] initWithFrame:StripePortraitLocation andKey:publishableKey];
     } else {
@@ -54,6 +56,12 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
                                     @[@"GST and PST", [NSNumber numberWithInteger:(GST + PST)], @"CAD"], @"Shangri-La, Vancouver",
                                     @[@"GST", [NSNumber numberWithInteger:GST], @"CAD"], @"Nuvo Hotel, Calgary"
                                     ,nil];
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
+                                                 initWithTarget:self action:@selector(hideKeyboard:)];
+    
+    gestureRecognizer.cancelsTouchesInView = NO;
+    [self.tableView addGestureRecognizer:gestureRecognizer];
     
     [self updateLabels];
 }
@@ -197,7 +205,8 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
                                    double delayInSeconds = 2.0;
                                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                                       [self performSegueWithIdentifier:@"PaymentComplete" sender:nil];
+//                                       [self performSegueWithIdentifier:@"PaymentComplete" sender:nil];
+                                       exit(0);
                                    });
                                } else {
                                    [HUD hide:YES];
@@ -311,6 +320,18 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
         return NO;
     }
     return YES;
+}
+
+- (void)hideKeyboard:(UIGestureRecognizer *)gestureRecognizer
+{
+    CGPoint point = [gestureRecognizer locationInView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:point];
+    
+    if (indexPath != nil && indexPath.section == 0 && indexPath.row == 0) {
+        return;
+    }
+    [self.locationDetailField becomeFirstResponder];
+    [self.locationDetailField resignFirstResponder];
 }
 
 @end

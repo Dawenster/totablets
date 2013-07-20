@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "STPCard.h"
 
-@interface InfoViewController : UIViewController
+@interface InfoViewController : UIViewController <UIScrollViewDelegate>
 
-@property (strong, nonatomic) STPCard* stripeCard;
+@property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
 
 @end

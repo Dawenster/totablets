@@ -38,6 +38,10 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 {
     [super viewDidLoad];
     
+    self.locationDetailField.delegate = self;
+    self.nameField.delegate = self;
+    self.emailField.delegate = self;
+    
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
     if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
@@ -137,7 +141,35 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 
 - (void)stripeView:(STPView *)view withCard:(PKCard *)card isValid:(BOOL)valid
 {
-    self.payButton.enabled = valid;
+    if (valid && [self fieldsFilledOut:0]) {
+        self.payButton.enabled = YES;
+        self.fillInAllFieldsLabel.text = @"";
+    } else {
+        self.payButton.enabled = NO;
+        self.fillInAllFieldsLabel.text = @"Please fill in all fields";
+    }
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    NSLog(@"This field: %d",[text length]);
+    NSLog(@"From fields filled out: %d",[self.locationDetailField.text length]);
+    if ([self.stripeView.paymentView isValid] && [self fieldsFilledOut:[text length]]) {
+        self.payButton.enabled = YES;
+        self.fillInAllFieldsLabel.text = @"";
+    } else {
+        self.payButton.enabled = NO;
+        self.fillInAllFieldsLabel.text = @"Please fill in all fields";
+    }
+    return YES;
+}
+
+- (BOOL)fieldsFilledOut:(int)currentCharacters
+{
+    return ([self.locationDetailField.text length] + currentCharacters) > 0 &&
+            ([self.nameField.text length] + currentCharacters) > 0 &&
+            ([self.emailField.text length] + currentCharacters) > 0;
 }
 
 - (IBAction)pay;

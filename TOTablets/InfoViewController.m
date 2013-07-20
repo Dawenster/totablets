@@ -84,6 +84,7 @@
         page += 1;
     }
     offset = offset - (offset % offsetAmount);
+    [self.scrollView setContentOffset:CGPointMake(offset + offsetAmount, 0) animated:NO];
 }
 
 - (void) onTimer {

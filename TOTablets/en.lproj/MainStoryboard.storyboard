@@ -362,7 +362,7 @@ B. Usage
                                                 </textView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Please fill in all fields" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3Py-Hu-vQL">
                                                     <rect key="frame" x="261" y="291" width="157" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="italicSystem" pointSize="16"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -503,6 +503,44 @@ B. Usage
         <image name="YellowButton.png" width="204" height="42"/>
         <image name="YellowButtonPressed.png" width="204" height="42"/>
     </resources>
+    <classes>
+        <class className="InfoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/InfoViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="LocationPickerViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LocationPickerViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+            </relationships>
+        </class>
+        <class className="PaymentCompleteViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PaymentCompleteViewController.h"/>
+        </class>
+        <class className="PaymentViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PaymentViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="changeDays"/>
+                <relationship kind="action" name="pay"/>
+                <relationship kind="outlet" name="daysLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="fillInAllFieldsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="grandTotalAmount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="locationDetailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="locationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="stepper" candidateClass="UIStepper"/>
+                <relationship kind="outlet" name="subtotalAmount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="subtotalLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taxesAmount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taxesLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

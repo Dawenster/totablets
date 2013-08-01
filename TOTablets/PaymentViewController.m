@@ -9,6 +9,7 @@
 #import "PaymentViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import "Reachability.h"
+#import "PaymentCompleteViewController.h"
 
 const CGRect StripePortraitLocation = { { 452.0f, 395.0f }, { 290.0f, 55.0f } };
 const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } };
@@ -32,6 +33,7 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
     int tax;
     float taxAmount;
     float grandTotal;
+    NSString *formattedEndDateString;
 }
 
 - (void)viewDidLoad
@@ -153,8 +155,6 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
     NSString *text = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    NSLog(@"This field: %d",[text length]);
-    NSLog(@"From fields filled out: %d",[self.locationDetailField.text length]);
     if ([self.stripeView.paymentView isValid] && [self fieldsFilledOut:[text length]]) {
         self.payButton.enabled = YES;
         self.fillInAllFieldsLabel.text = @"";
@@ -174,11 +174,17 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 
 - (IBAction)pay;
 {
+    [self.locationDetailField becomeFirstResponder];
+    [self.locationDetailField resignFirstResponder];
+    self.payButton.enabled = NO;
+    
     if ([self reachable]) {
         HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         HUD.labelText = @"Processing payment";
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             dispatch_async(dispatch_get_main_queue(), ^{
+                [self.locationDetailField becomeFirstResponder];
+                [self.locationDetailField resignFirstResponder];
                 self.responseData = [NSMutableData data];
                 [self stripeCall];
             });
@@ -237,8 +243,7 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
                                    double delayInSeconds = 2.0;
                                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//                                       [self performSegueWithIdentifier:@"PaymentComplete" sender:nil];
-                                       exit(0);
+                                       [self performSegueWithIdentifier:@"PaymentComplete" sender:nil];
                                    });
                                } else {
                                    [HUD hide:YES];
@@ -314,7 +319,7 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
     NSDate *futureDate = [gregorian dateByAddingComponents:futureComponents toDate:date options:0];
     NSDateComponents *components = [gregorian components: NSUIntegerMax fromDate: futureDate];
     
-    [components setHour: 16];
+    [components setHour: [components hour] + 1];
     [components setMinute: 0];
     [components setSecond: 0];
     
@@ -326,6 +331,7 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
     NSString *timeAsString = [formatter stringFromDate:endDate];
     
     NSString *endDateString = [NSString stringWithFormat:@"%@ at %@", dateAsString, timeAsString];
+    formattedEndDateString = endDateString;
     return endDateString;
 }
 
@@ -336,6 +342,12 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
         LocationPickerViewController *controller = (LocationPickerViewController *)navigationController.topViewController;
         controller.delegate = self;
         controller.selectedLocationName = locationName;
+    } else if ([segue.identifier isEqualToString:@"PaymentComplete"]) {
+        PaymentCompleteViewController *controller = (PaymentCompleteViewController *)segue.destinationViewController;
+        controller.customerName = self.nameField.text;
+        controller.locationName = locationName;
+        controller.email = self.emailField.text;
+        controller.endDate = formattedEndDateString;
     }
 }
 

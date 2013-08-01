@@ -178,7 +178,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                                 </textField>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -340,7 +340,7 @@
                                                     <rect key="frame" x="55" y="77" width="568" height="128"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <mutableString key="text">TERMS AND CONDITIONS BETWEEN YOU (THE RENTER) AND T.O. TABLETS (THE OWNER)
+                                                    <string key="text">TERMS AND CONDITIONS BETWEEN YOU (THE RENTER) AND T.O. TABLETS (THE OWNER)
 
 As a renter of a TO Tablets iPad, you confirm and agree to the following:
 
@@ -356,7 +356,7 @@ B. Usage
 2. You will take responsibility for the loss or theft of the iPad during the rental period
 3. You accept withdrawal of the security deposit by TO Tablets if the iPad is lost, stolen, or damaged
 4. You will not lend the iPad to any third parties
-5. You will not use the iPad for any illegal activities - TO Tablets disclaims responsibility for any illegal use of the iPad</mutableString>
+5. You will not use the iPad for any illegal activities - TO Tablets disclaims responsibility for any illegal use of the iPad</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -432,46 +432,95 @@ B. Usage
                 <viewController id="pjd-77-z2b" customClass="PaymentCompleteViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="f0q-4I-oo5">
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Thank you for renting this iPad :)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LSE-KG-ALK">
-                                <rect key="frame" x="261" y="165" width="246" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Thank you, Anne Hathaway, for renting with Shangri-La, Vancouver :)" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LSE-KG-ALK">
+                                <rect key="frame" x="105" y="78" width="557" height="72"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="To unlock your iPad, please do the following:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="b7T-OR-43p">
-                                <rect key="frame" x="112" y="317" width="338" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Please wait while we load your apps." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pSh-B1-vDo">
+                                <rect key="frame" x="105" y="461" width="524" height="36"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="1. Triple click the round home button" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2rw-ld-xQH">
-                                <rect key="frame" x="169" y="381" width="275" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Your payment has been received" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="kNP-zR-Ac0">
+                                <rect key="frame" x="172" y="234" width="315" height="36"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="2. Enter this password: 9898" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="T7k-4V-VNp">
-                                <rect key="frame" x="169" y="435" width="216" height="21"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="white-check-mark.gif" id="m2f-JG-NeL">
+                                <rect key="frame" x="105" y="227" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Your receipt has been emailed to abcdefg.hijklmnopqrs@gmail.com" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="X4y-zF-phK">
+                                <rect key="frame" x="172" y="293" width="490" height="48"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="3. And that's it!  Please enjoy - your receipt has been emailed to you." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gga-vN-wJX">
-                                <rect key="frame" x="169" y="484" width="518" height="21"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="white-check-mark.gif" id="4Na-sE-53Q">
+                                <rect key="frame" x="105" y="292" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="You have this iPad until Aug. 31, 2013 at 16:00" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mk7-qZ-dMe">
+                                <rect key="frame" x="172" y="363" width="490" height="36"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Your rental will start in:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HBd-1V-c83">
+                                <rect key="frame" x="106" y="505" width="230" height="36"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="white-check-mark.gif" id="ZXB-Sh-lmg">
+                                <rect key="frame" x="105" y="357" width="50" height="50"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <view contentMode="scaleToFill" id="hqh-oF-dO9">
+                                <rect key="frame" x="102" y="556" width="292" height="131"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="60" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="B9V-LA-82q">
+                                        <rect key="frame" x="0.0" y="-22" width="186" height="174"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="150"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="seconds." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gVw-rf-TvU">
+                                        <rect key="frame" x="170" y="95" width="89" height="36"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="emailLabel" destination="X4y-zF-phK" id="oS9-BQ-IV1"/>
+                        <outlet property="endDateLabel" destination="mk7-qZ-dMe" id="28O-e3-Ygh"/>
+                        <outlet property="messageLabel" destination="pSh-B1-vDo" id="GH0-qp-Umt"/>
+                        <outlet property="rentalStartLabel" destination="HBd-1V-c83" id="7we-RO-1vx"/>
+                        <outlet property="secondsLabel" destination="gVw-rf-TvU" id="feP-we-sLZ"/>
+                        <outlet property="timerLabel" destination="B9V-LA-82q" id="70E-PW-z3D"/>
+                        <outlet property="titleLabel" destination="LSE-KG-ALK" id="HXL-0T-PwQ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cpJ-V2-1d6" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -502,6 +551,7 @@ B. Usage
         <image name="BlueButtonPressed.png" width="204" height="42"/>
         <image name="YellowButton.png" width="204" height="42"/>
         <image name="YellowButtonPressed.png" width="204" height="42"/>
+        <image name="white-check-mark.gif" width="50" height="50"/>
     </resources>
     <classes>
         <class className="InfoViewController" superclassName="UIViewController">
@@ -518,6 +568,15 @@ B. Usage
         </class>
         <class className="PaymentCompleteViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PaymentCompleteViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="emailLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="endDateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="messageLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rentalStartLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="secondsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timerLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+            </relationships>
         </class>
         <class className="PaymentViewController" superclassName="UITableViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PaymentViewController.h"/>

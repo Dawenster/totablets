@@ -13,24 +13,22 @@
 
 const CGRect StripePortraitLocation = { { 452.0f, 395.0f }, { 290.0f, 55.0f } };
 const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } };
-const int rentalFee = 2500;
-const int GST = 5;
-const int PST = 7;
-NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 
 @interface PaymentViewController ()
 
 @end
 
 @implementation PaymentViewController {
-    NSDictionary *taxesByLocation;
+    NSString *publishableKey;
     NSDate *startDate;
     NSDate *endDate;
     NSString *locationName;
     NSString *currency;
+    NSString *allTaxes;
     float days;
     float subtotal;
     int tax;
+    NSInteger rentalFee;
     float taxAmount;
     float grandTotal;
     NSString *formattedEndDateString;
@@ -55,19 +53,23 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
     [self.view addSubview:self.stripeView];
     
     self.payButton.enabled = NO;
-    locationName = @"Shangri-La, Vancouver";
+    locationName = @"Hotel";
     self.locationLabel.text = locationName;
-
-    taxesByLocation = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    @[@"GST and PST", [NSNumber numberWithInteger:(GST + PST)], @"CAD"], @"Shangri-La, Vancouver",
-                                    @[@"GST", [NSNumber numberWithInteger:GST], @"CAD"], @"Nuvo Hotel, Calgary"
-                                    ,nil];
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
                                                  initWithTarget:self action:@selector(hideKeyboard:)];
     
     gestureRecognizer.cancelsTouchesInView = NO;
     [self.tableView addGestureRecognizer:gestureRecognizer];
+    
+    HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    HUD.labelText = @"Loading info";
+    
+    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self locationInfo];
+        });
+    });
     
     [self updateLabels];
 }
@@ -95,10 +97,8 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
     self.locationLabel.text = locationName;
     days = [self.stepper value];
     subtotal = rentalFee * days;
-    tax = [taxesByLocation[self.locationLabel.text][1] integerValue];
     taxAmount = subtotal * tax / 100.0;
     grandTotal = subtotal + taxAmount;
-    currency = taxesByLocation[self.locationLabel.text][2];
     
     startDate = [NSDate date];
     NSString *endDateString = [self formatDate:startDate];
@@ -110,7 +110,7 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
     }
     self.subtotalLabel.text = [NSString stringWithFormat:@"Sub-total (%0.0f days x $%d per day):", days, rentalFee / 100];
     self.subtotalAmount.text = [NSString stringWithFormat:@"$%.02f %@", subtotal / 100, currency];
-    self.taxesLabel.text = [NSString stringWithFormat:@"Taxes (%@):", taxesByLocation[self.locationLabel.text][0]];
+    self.taxesLabel.text = [NSString stringWithFormat:@"Taxes (%@):", allTaxes];
     self.taxesAmount.text = [NSString stringWithFormat:@"(%d%%) $%.02f %@", tax, taxAmount / 100.0, currency];
     self.grandTotalAmount.text = [NSString stringWithFormat:@"$%.02f %@", grandTotal / 100.0, currency];
 }
@@ -172,6 +172,66 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
             ([self.emailField.text length] + currentCharacters) > 0;
 }
 
+- (void)locationInfo
+{
+    NSString *deviceUDID = [[UIDevice currentDevice] name];
+    self.responseData = [NSMutableData data];
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.totablets.com/location_info"]];
+//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/location_info"]];
+    request.HTTPMethod = @"POST";
+    NSString *body     = [NSString stringWithFormat:@"ipad_name=%@", deviceUDID];
+    NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"Escaped Body: %@", escapedBody);
+    
+    request.HTTPBody = [escapedBody dataUsingEncoding:NSUTF8StringEncoding];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSLog(@"Connection description: %@",connection.description);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"didReceiveResponse");
+    [self.responseData setLength:0];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [self.responseData appendData:data];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSLog(@"didFailWithError");
+    NSLog(@"Connection failed: %@", [error description]);
+    [self noConnectionError];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    NSLog(@"connectionDidFinishLoading");
+    NSLog(@"Succeeded! Received %d bytes of data",[self.responseData length]);
+    
+    // convert to JSON
+    NSError *myError = nil;
+    NSDictionary *res = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&myError];
+    
+    locationName = res[@"location_name"];
+    self.locationLabel.text = locationName;
+    currency = res[@"currency"];
+    rentalFee = [res[@"rental_fee"] intValue];
+    publishableKey = res[@"publishable_key"];
+    
+    NSDictionary *taxes = res[@"taxes"];
+    tax = 0;
+    for (id key in taxes) {
+        tax += [taxes[key] intValue];
+    }
+    
+    NSArray *allTaxesAsArray = [taxes allKeys];
+    allTaxes = [allTaxesAsArray componentsJoinedByString:@" + "];
+        
+    [self updateLabels];
+    [HUD hide:YES];
+}
+
 - (IBAction)pay;
 {
     [self.locationDetailField becomeFirstResponder];
@@ -216,12 +276,13 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
     });
     
     NSLog(@"Received token %@", token.tokenId);
+    NSString *deviceUDID = [[UIDevice currentDevice] name];
     
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.totablets.com/rentals"]];
 //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/rentals"]];
     request.HTTPMethod = @"POST";
-    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&location=%@&rate=%d&tax_names=%@&name=%@&email=%@&stripe_token=%@&grand_total=%0.0f&currency=%@",
-                          days, self.locationLabel.text, rentalFee, taxesByLocation[self.locationLabel.text][0], self.nameField.text, self.emailField.text, token.tokenId, grandTotal, currency];
+    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&location=%@&rate=%d&tax_names=%@&name=%@&email=%@&stripe_token=%@&grand_total=%0.0f&currency=%@&device_name=%@",
+                          days, self.locationLabel.text, rentalFee, allTaxes, self.nameField.text, self.emailField.text, token.tokenId, grandTotal, currency, deviceUDID];
     NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSLog(@"Escaped Body: %@", escapedBody);
@@ -261,7 +322,7 @@ NSString *publishableKey = @"pk_test_mHRnRqLpMebdwnbKedxjzUvf";
 //    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/capture_customer_data"]];
     request.HTTPMethod = @"POST";
     NSString *body     = [NSString stringWithFormat:@"days=%0.0f&start_date=%@&end_date=%@&location=%@&location_detail=%@&email=%@&rate=%d&subtotal=%0.0f&tax_names=%@&tax_percentage=%d&tax_amount=%0.0f&grand_total=%0.0f&currency=%@&device_name=%@",
-                          days, startDate, endDate, self.locationLabel.text, self.locationDetailField.text, self.emailField.text, rentalFee, subtotal, taxesByLocation[self.locationLabel.text][0], tax, taxAmount, grandTotal, currency, deviceUDID];
+                          days, startDate, endDate, self.locationLabel.text, self.locationDetailField.text, self.emailField.text, rentalFee, subtotal, allTaxes, tax, taxAmount, grandTotal, currency, deviceUDID];
     NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSLog(@"Send Customer Data Escaped Body: %@", escapedBody);

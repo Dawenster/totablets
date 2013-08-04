@@ -30,6 +30,9 @@
 @property (nonatomic, strong) IBOutlet UILabel *grandTotalAmount;
 @property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, strong) IBOutlet UILabel *fillInAllFieldsLabel;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *locationDetailSpinner;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *nameSpinner;
+@property (nonatomic, strong) IBOutlet UIActivityIndicatorView *emailSpinner;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)changeDays;

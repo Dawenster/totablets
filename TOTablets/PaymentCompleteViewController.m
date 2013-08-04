@@ -51,6 +51,9 @@
 {
     if (secondsRemaining > 9) {
         self.timerLabel.text = [NSString stringWithFormat:@"%d", secondsRemaining];
+    } else if (secondsRemaining == 1) {
+        self.secondsLabel.text = @"second";
+        self.timerLabel.text = [NSString stringWithFormat:@"0%d", secondsRemaining];
     } else {
         self.timerLabel.text = [NSString stringWithFormat:@"0%d", secondsRemaining];
     }

@@ -19,19 +19,19 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 @end
 
 @implementation PaymentViewController {
-    NSString *publishableKey;
     NSDate *startDate;
     NSDate *endDate;
+    NSString *publishableKey;
     NSString *locationName;
     NSString *currency;
     NSString *allTaxes;
+    NSString *formattedEndDateString;
+    NSInteger rentalFee;
+    int tax;
     float days;
     float subtotal;
-    int tax;
-    NSInteger rentalFee;
     float taxAmount;
     float grandTotal;
-    NSString *formattedEndDateString;
 }
 
 - (void)viewDidLoad
@@ -45,9 +45,9 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
     if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
-        self.stripeView = [[STPView alloc] initWithFrame:StripePortraitLocation andKey:publishableKey];
+        self.stripeView = [[STPView alloc] initWithFrame:StripePortraitLocation];
     } else {
-        self.stripeView = [[STPView alloc] initWithFrame:StripeLandscapeLocation andKey:publishableKey];
+        self.stripeView = [[STPView alloc] initWithFrame:StripeLandscapeLocation];
     }
     self.stripeView.delegate = self;
     [self.view addSubview:self.stripeView];
@@ -218,6 +218,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     currency = res[@"currency"];
     rentalFee = [res[@"rental_fee"] intValue];
     publishableKey = res[@"publishable_key"];
+    self.stripeView.key = publishableKey;
     
     NSDictionary *taxes = res[@"taxes"];
     tax = 0;

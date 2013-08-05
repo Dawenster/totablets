@@ -26,6 +26,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     NSString *currency;
     NSString *allTaxes;
     NSString *formattedEndDateString;
+    NSString *environmentURL;
     NSInteger rentalFee;
     int tax;
     float days;
@@ -37,6 +38,9 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    environmentURL = @"http://localhost:3000";
+//    environmentURL = @"https://www.totablets.com";
     
     self.locationDetailField.delegate = self;
     self.nameField.delegate = self;
@@ -177,8 +181,8 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     NSString *deviceUDID = [[UIDevice currentDevice] name];
     self.responseData = [NSMutableData data];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.totablets.com/location_info"]];
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/location_info"]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/location_info", environmentURL];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     request.HTTPMethod = @"POST";
     NSString *body     = [NSString stringWithFormat:@"ipad_name=%@", deviceUDID];
     NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
@@ -227,7 +231,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     }
     
     NSArray *allTaxesAsArray = [taxes allKeys];
-    allTaxes = [allTaxesAsArray componentsJoinedByString:@" + "];
+    allTaxes = [allTaxesAsArray componentsJoinedByString:@" and "];
         
     [self updateLabels];
     [HUD hide:YES];
@@ -235,8 +239,6 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 
 - (IBAction)pay;
 {
-    [self.locationDetailField becomeFirstResponder];
-    [self.locationDetailField resignFirstResponder];
     self.payButton.enabled = NO;
     
     if ([self reachable]) {
@@ -272,15 +274,12 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 
 - (void)handleToken:(STPToken *)token
 {
-    dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
-        [self sendCustomerData:token];
-    });
-    
     NSLog(@"Received token %@", token.tokenId);
     NSString *deviceUDID = [[UIDevice currentDevice] name];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.totablets.com/rentals"]];
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/rentals"]];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/rentals", environmentURL];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     request.HTTPMethod = @"POST";
     NSString *body     = [NSString stringWithFormat:@"days=%0.0f&location=%@&rate=%d&tax_names=%@&name=%@&email=%@&stripe_token=%@&grand_total=%0.0f&currency=%@&device_name=%@",
                           days, self.locationLabel.text, rentalFee, allTaxes, self.nameField.text, self.emailField.text, token.tokenId, grandTotal, currency, deviceUDID];
@@ -305,6 +304,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
                                    double delayInSeconds = 2.0;
                                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                                       [self sendCustomerData:token];
                                        [self performSegueWithIdentifier:@"PaymentComplete" sender:nil];
                                    });
                                } else {
@@ -319,8 +319,8 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 {
     NSString *deviceUDID = [[UIDevice currentDevice] name];
     
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"https://www.totablets.com/capture_customer_data"]];
-//    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:@"http://localhost:3000/capture_customer_data"]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/capture_customer_data", environmentURL];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     request.HTTPMethod = @"POST";
     NSString *body     = [NSString stringWithFormat:@"days=%0.0f&start_date=%@&end_date=%@&location=%@&location_detail=%@&email=%@&rate=%d&subtotal=%0.0f&tax_names=%@&tax_percentage=%d&tax_amount=%0.0f&grand_total=%0.0f&currency=%@&device_name=%@",
                           days, startDate, endDate, self.locationLabel.text, self.locationDetailField.text, self.emailField.text, rentalFee, subtotal, allTaxes, tax, taxAmount, grandTotal, currency, deviceUDID];
@@ -399,12 +399,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:@"PickLocation"]) {
-        UINavigationController *navigationController = segue.destinationViewController;
-        LocationPickerViewController *controller = (LocationPickerViewController *)navigationController.topViewController;
-        controller.delegate = self;
-        controller.selectedLocationName = locationName;
-    } else if ([segue.identifier isEqualToString:@"PaymentComplete"]) {
+    if ([segue.identifier isEqualToString:@"PaymentComplete"]) {
         PaymentCompleteViewController *controller = (PaymentCompleteViewController *)segue.destinationViewController;
         controller.customerName = self.nameField.text;
         controller.locationName = locationName;

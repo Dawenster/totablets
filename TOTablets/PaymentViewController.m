@@ -39,8 +39,8 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 {
     [super viewDidLoad];
     
-    environmentURL = @"http://localhost:3000";
-//    environmentURL = @"https://www.totablets.com";
+//    environmentURL = @"http://localhost:3000";
+    environmentURL = @"https://www.totablets.com";
     
     self.locationDetailField.delegate = self;
     self.nameField.delegate = self;

@@ -304,7 +304,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
                                    double delayInSeconds = 2.0;
                                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                                       [self sendCustomerData:token];
+                                       [self sendCustomerData:token rentalChargeID:res[@"rental_charge_id"] preAuthID:res[@"pre_auth_id"] preAuthAmount:[res[@"pre_auth_amount"] intValue]];
                                        [self performSegueWithIdentifier:@"PaymentComplete" sender:nil];
                                    });
                                } else {
@@ -315,15 +315,15 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
                            }];
 }
 
-- (void)sendCustomerData:(STPToken *)token
+- (void)sendCustomerData:(STPToken *)token rentalChargeID:(NSString *)rentalChargeID preAuthID:(NSString *)preAuthID preAuthAmount:(int)preAuthAmount
 {
     NSString *deviceUDID = [[UIDevice currentDevice] name];
     
     NSString *urlString = [NSString stringWithFormat:@"%@/capture_customer_data", environmentURL];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     request.HTTPMethod = @"POST";
-    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&start_date=%@&end_date=%@&location=%@&location_detail=%@&email=%@&rate=%d&subtotal=%0.0f&tax_names=%@&tax_percentage=%d&tax_amount=%0.0f&grand_total=%0.0f&currency=%@&device_name=%@",
-                          days, startDate, endDate, self.locationLabel.text, self.locationDetailField.text, self.emailField.text, rentalFee, subtotal, allTaxes, tax, taxAmount, grandTotal, currency, deviceUDID];
+    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&start_date=%@&end_date=%@&location=%@&location_detail=%@&email=%@&rate=%d&subtotal=%0.0f&tax_names=%@&tax_percentage=%d&tax_amount=%0.0f&grand_total=%0.0f&currency=%@&device_name=%@&rental_charge_id=%@&pre_auth_id=%@&pre_auth_amount=%d",
+                          days, startDate, endDate, self.locationLabel.text, self.locationDetailField.text, self.emailField.text, rentalFee, subtotal, allTaxes, tax, taxAmount, grandTotal, currency, deviceUDID, rentalChargeID, preAuthID, preAuthAmount];
     NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSLog(@"Send Customer Data Escaped Body: %@", escapedBody);

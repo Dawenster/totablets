@@ -21,5 +21,6 @@
 @property (nonatomic, strong) IBOutlet UILabel *messageLabel;
 @property (nonatomic, strong) IBOutlet UILabel *rentalStartLabel;
 @property (nonatomic, strong) IBOutlet UILabel *secondsLabel;
+@property (nonatomic, strong) IBOutlet UIView *signOutWarning;
 
 @end

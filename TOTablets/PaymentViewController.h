@@ -11,7 +11,7 @@
 #import "LocationPickerViewController.h"
 #import "MBProgressHUD.h"
 
-@interface PaymentViewController : UITableViewController <STPViewDelegate, LocationPickerViewControllerDelegate, UITextFieldDelegate> {
+@interface PaymentViewController : UITableViewController <STPViewDelegate, LocationPickerViewControllerDelegate, UITextFieldDelegate, UIAlertViewDelegate> {
     MBProgressHUD *HUD;
 }
 
@@ -30,6 +30,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *grandTotalAmount;
 @property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, strong) IBOutlet UILabel *fillInAllFieldsLabel;
+@property (nonatomic, strong) UIPopoverController *adminPopoverController;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)changeDays;

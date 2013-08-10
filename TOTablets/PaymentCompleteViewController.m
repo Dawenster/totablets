@@ -7,6 +7,10 @@
 //
 
 #import "PaymentCompleteViewController.h"
+#import "AppDelegate.h"
+
+const CGRect AlertPortraitLocation = { { 200.0f, 510.0f }, { 486.0f, 89.0f } };
+const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
 
 @interface PaymentCompleteViewController ()
 
@@ -30,6 +34,11 @@
 {
     [super viewDidLoad];
 	[self updateLabels];
+    
+    if (!UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
+        self.signOutWarning.frame = AlertLandscapeLocation;
+    }
+    
     timer = [NSTimer scheduledTimerWithTimeInterval: 1.0 target:self selector:@selector(updateCountdown) userInfo:nil repeats: YES];
     secondsRemaining = 60;
 }
@@ -61,15 +70,24 @@
     if (secondsRemaining < 0) {
         [timer invalidate];
         timer = nil;
-        self.messageLabel.text = @"Your iPad is now ready for use. Enjoy!";
+        self.messageLabel.text = @"Press the home button to begin.";
         self.rentalStartLabel.text = @"";
         self.secondsLabel.text = @"";
-        double delayInSeconds = 2.0;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            exit(0);
-        });
+        self.timerLabel.font = [UIFont boldSystemFontOfSize:75.0];
+        self.timerLabel.text = @"Enjoy!";
     }
+}
+
+- (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+{
+    [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+    
+    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
+        self.signOutWarning.frame = AlertPortraitLocation;
+    } else {
+        self.signOutWarning.frame = AlertLandscapeLocation;
+    }
+    [self.signOutWarning setNeedsDisplay];
 }
 
 @end

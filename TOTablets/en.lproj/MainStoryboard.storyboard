@@ -42,7 +42,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-68" y="-129"/>
+            <point key="canvasLocation" x="-62" y="-129"/>
         </scene>
         <!--Payment View Controller-->
         <scene sceneID="KM9-VZ-bs4">
@@ -60,6 +60,11 @@
                                     <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="x94-3W-Jny">
                                         <connections>
                                             <action selector="cancel:" destination="Wuv-QI-Voh" id="8bM-mR-Quh"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem key="rightBarButtonItem" title="Admin" id="Vx8-xu-9fh">
+                                        <connections>
+                                            <action selector="adminButtonPressed:" destination="Wuv-QI-Voh" id="YAr-a9-qCp"/>
                                         </connections>
                                     </barButtonItem>
                                 </navigationItem>
@@ -302,8 +307,33 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" textLabel="hyY-46-Vw2" detailTextLabel="asF-Rp-VMi" rowHeight="44" style="IBUITableViewCellStyleValue1" id="IS8-M6-r8E">
+                                        <rect key="frame" x="0.0" y="613" width="768" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="45" y="0.0" width="678" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Pre-authorization (will not be charged unless damage or theft is found)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hyY-46-Vw2">
+                                                    <rect key="frame" x="10" y="11" width="530" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="$750.00 CAD" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="asF-Rp-VMi">
+                                                    <rect key="frame" x="565" y="11" width="103" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                                    <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" rowHeight="333" id="sVI-Uh-HXJ">
-                                        <rect key="frame" x="0.0" y="613" width="768" height="334"/>
+                                        <rect key="frame" x="0.0" y="657" width="768" height="334"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="0.0" width="678" height="332"/>
@@ -339,21 +369,26 @@
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <string key="text">TERMS AND CONDITIONS BETWEEN YOU (THE RENTER) AND T.O. TABLETS (THE OWNER)
 
-As a renter of a TO Tablets iPad, you confirm and agree to the following:
+As a renter of a TO Tablets device, you confirm and agree to the following:
 
 A. Rental and return
 
 1. You will pay the stated rental price including applicable local taxes
-2. You are are over 18 years of age and accept the responsibility of the iPad tablet throughout the rental period specified when booking
-3. At the end of the rental period, you will return the iPad and accessories (cover and power cord) to an employee of the establishment where TO Tablet placed the iPad
+2. You accept an additional pre-authorization on your credit card of $750 - no charges will be made unless the device is damaged or stolen
+3. We reserve the right to claim up to the full $750 pre-authorization should we find the device stolen or that it has sustained newly-caused damage
+4. You are are over 18 years of age and accept the responsibility of the device tablet throughout the rental period specified when booking
+5. At the end of the rental period, you will return the device and accessories (cover and power cord) to an employee of the establishment where TO Tablet placed the device
 
 B. Usage
 
-1. You will assume responsibility for damage to the iPad or its accessories resulting from use during the rental period that was not found and described prior to the rental
-2. You will take responsibility for the loss or theft of the iPad during the rental period
-3. You accept withdrawal of the security deposit by TO Tablets if the iPad is lost, stolen, or damaged
-4. You will not lend the iPad to any third parties
-5. You will not use the iPad for any illegal activities - TO Tablets disclaims responsibility for any illegal use of the iPad</string>
+1. You will assume responsibility for damage to the device or its accessories resulting from use during the rental period that was not found and described prior to the rental
+2. You will take responsibility for the loss or theft of the device during the rental period
+3. You accept withdrawal of the security deposit by TO Tablets if the device is lost, stolen, or damaged
+4. You will not lend the device to any third parties
+5. You will not use the device for any illegal activities - TO Tablets disclaims responsibility for any illegal use of the device
+6. You are responsible for logging out of all accounts on the device - we do not take responsibility for wiping any user sessions on the device once the rental is over
+7. You will not change the background or lock screen image on the device
+8. If you change the settings on the device, you will change them back prior to the end of the rental period</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -414,7 +449,7 @@ B. Usage
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Please wait while we load your apps." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pSh-B1-vDo">
-                                <rect key="frame" x="105" y="461" width="524" height="36"/>
+                                <rect key="frame" x="105" y="438" width="524" height="36"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -450,7 +485,7 @@ B. Usage
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Your rental will start in:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HBd-1V-c83">
-                                <rect key="frame" x="106" y="505" width="230" height="36"/>
+                                <rect key="frame" x="106" y="482" width="230" height="36"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -461,21 +496,53 @@ B. Usage
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <view contentMode="scaleToFill" id="hqh-oF-dO9">
-                                <rect key="frame" x="102" y="556" width="292" height="131"/>
+                                <rect key="frame" x="102" y="546" width="292" height="131"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="60" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="B9V-LA-82q">
-                                        <rect key="frame" x="0.0" y="-22" width="186" height="174"/>
+                                        <rect key="frame" x="0.0" y="-21" width="320" height="174"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="150"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="seconds." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gVw-rf-TvU">
-                                        <rect key="frame" x="170" y="95" width="89" height="36"/>
+                                        <rect key="frame" x="170" y="96" width="89" height="36"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view tag="3000" contentMode="scaleToFill" id="qsA-le-3jq">
+                                <rect key="frame" x="102" y="710" width="486" height="89"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="alert_icon.png" id="CnM-NH-gbv">
+                                        <rect key="frame" x="0.0" y="2" width="75" height="75"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Please note!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="6xo-1H-ZCj">
+                                        <rect key="frame" x="83" y="0.0" width="177" height="36"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="You are responsible for signing" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="xTE-pn-WH1">
+                                        <rect key="frame" x="244" y="8" width="344" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="out of everything you log into (Facebook, email, bank websites) before the end of your rental." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IgI-1m-UYB">
+                                        <rect key="frame" x="83" y="22" width="403" height="62"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -490,6 +557,7 @@ B. Usage
                         <outlet property="messageLabel" destination="pSh-B1-vDo" id="GH0-qp-Umt"/>
                         <outlet property="rentalStartLabel" destination="HBd-1V-c83" id="7we-RO-1vx"/>
                         <outlet property="secondsLabel" destination="gVw-rf-TvU" id="feP-we-sLZ"/>
+                        <outlet property="signOutWarning" destination="qsA-le-3jq" id="B83-pV-2Tg"/>
                         <outlet property="timerLabel" destination="B9V-LA-82q" id="70E-PW-z3D"/>
                         <outlet property="titleLabel" destination="LSE-KG-ALK" id="HXL-0T-PwQ"/>
                     </connections>
@@ -505,6 +573,7 @@ B. Usage
         <image name="BlueButtonPressed.png" width="204" height="42"/>
         <image name="YellowButton.png" width="204" height="42"/>
         <image name="YellowButtonPressed.png" width="204" height="42"/>
+        <image name="alert_icon.png" width="250" height="250"/>
         <image name="white-check-mark.gif" width="50" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

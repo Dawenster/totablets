@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:game_landscapes.jpg">
-   </FileRef>
-   <FileRef
       location = "group:TOTablets.xcodeproj">
    </FileRef>
    <FileRef

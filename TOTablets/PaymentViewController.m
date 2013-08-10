@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "Reachability.h"
 #import "PaymentCompleteViewController.h"
+#import "AdminViewController.h"
 
 const CGRect StripePortraitLocation = { { 452.0f, 395.0f }, { 290.0f, 55.0f } };
 const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } };
@@ -27,6 +28,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     NSString *allTaxes;
     NSString *formattedEndDateString;
     NSString *environmentURL;
+    NSString *adminPassword;
     NSInteger rentalFee;
     int tax;
     float days;
@@ -34,6 +36,8 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     float taxAmount;
     float grandTotal;
 }
+
+@synthesize adminPopoverController = _adminPopoverController;
 
 - (void)viewDidLoad
 {
@@ -130,7 +134,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
         case 0:return 1;
         case 1:return 2;
         case 2:return 3;
-        case 3:return 4;
+        case 3:return 5;
     }
     return 0;
 }
@@ -138,6 +142,26 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 - (IBAction)cancel:(id)sender
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)adminButtonPressed:(UIBarButtonItem *)sender
+{
+    if ([self.adminPopoverController isPopoverVisible]) {
+        [self.adminPopoverController dismissPopoverAnimated:YES];
+    } else {
+        [self.adminPopoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    }
+}
+
+- (UIPopoverController *)adminPopoverController
+{
+    if (_adminPopoverController == nil) {
+        AdminViewController *adminViewController = [AdminViewController alloc];
+        _adminPopoverController = [[UIPopoverController alloc] initWithContentViewController:adminViewController];
+        adminViewController.paymentView = self;
+        adminViewController.adminPassword = adminPassword;
+    }
+    return _adminPopoverController;
 }
 
 - (IBAction)changeDays
@@ -223,6 +247,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     rentalFee = [res[@"rental_fee"] intValue];
     publishableKey = res[@"publishable_key"];
     self.stripeView.key = publishableKey;
+    adminPassword = res[@"admin_password"];
     
     NSDictionary *taxes = res[@"taxes"];
     tax = 0;
@@ -239,6 +264,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 
 - (IBAction)pay;
 {
+    [self.view endEditing:YES];
     self.payButton.enabled = NO;
     
     if ([self reachable]) {
@@ -246,8 +272,6 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
         HUD.labelText = @"Processing payment";
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self.locationDetailField becomeFirstResponder];
-                [self.locationDetailField resignFirstResponder];
                 self.responseData = [NSMutableData data];
                 [self stripeCall];
             });
@@ -363,10 +387,15 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 {
     UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
                                                       message:@"No internet connection - please see the front desk for assistance."
-                                                     delegate:nil
+                                                     delegate:self
                                             cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
                                             otherButtonTitles:nil];
     [message show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (NSString *)formatDate:(NSDate *)date

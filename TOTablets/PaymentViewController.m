@@ -43,8 +43,8 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 {
     [super viewDidLoad];
     
-//    environmentURL = @"http://localhost:3000";
-    environmentURL = @"https://www.totablets.com";
+    environmentURL = @"http://localhost:3000";
+//    environmentURL = @"https://www.totablets.com";
     
     self.locationDetailField.delegate = self;
     self.nameField.delegate = self;
@@ -142,6 +142,9 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 - (IBAction)cancel:(id)sender
 {
     [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    if ([self.adminPopoverController isPopoverVisible]) {
+        [self.adminPopoverController dismissPopoverAnimated:YES];
+    }
 }
 
 - (IBAction)adminButtonPressed:(UIBarButtonItem *)sender
@@ -248,6 +251,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     publishableKey = res[@"publishable_key"];
     self.stripeView.key = publishableKey;
     adminPassword = res[@"admin_password"];
+    NSLog([NSString stringWithFormat:@"Password: %@", adminPassword]);
     
     NSDictionary *taxes = res[@"taxes"];
     tax = 0;
@@ -391,6 +395,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
                                             cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
                                             otherButtonTitles:nil];
     [message show];
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex

@@ -21,7 +21,12 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    exit(1);
+    [self.paymentCompleteViewController dismissViewControllerAnimated:YES completion:nil];
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self.paymentViewController dismissViewControllerAnimated:YES completion:nil];
+    });
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application

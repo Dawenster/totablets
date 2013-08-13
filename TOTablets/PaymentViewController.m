@@ -11,6 +11,7 @@
 #import "Reachability.h"
 #import "PaymentCompleteViewController.h"
 #import "AdminViewController.h"
+#import "AppDelegate.h"
 
 const CGRect StripePortraitLocation = { { 452.0f, 395.0f }, { 290.0f, 55.0f } };
 const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } };
@@ -43,8 +44,11 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 {
     [super viewDidLoad];
     
-    environmentURL = @"http://localhost:3000";
-//    environmentURL = @"https://www.totablets.com";
+//    environmentURL = @"http://localhost:3000";
+    environmentURL = @"https://www.totablets.com";
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.paymentViewController = self;
     
     self.locationDetailField.delegate = self;
     self.nameField.delegate = self;
@@ -251,7 +255,6 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     publishableKey = res[@"publishable_key"];
     self.stripeView.key = publishableKey;
     adminPassword = res[@"admin_password"];
-    NSLog([NSString stringWithFormat:@"Password: %@", adminPassword]);
     
     NSDictionary *taxes = res[@"taxes"];
     tax = 0;
@@ -440,12 +443,6 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
         controller.email = self.emailField.text;
         controller.endDate = formattedEndDateString;
     }
-}
-
-- (void)locationPicker:(LocationPickerViewController *)picker didPickLocation:(NSString *)theLocationName
-{
-    locationName = theLocationName;
-    [self updateLabels];
 }
 
 - (BOOL)reachable {

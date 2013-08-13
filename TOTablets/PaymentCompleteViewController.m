@@ -19,6 +19,7 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
 @implementation PaymentCompleteViewController {
     NSTimer *timer;
     int secondsRemaining;
+    bool firstTimeLoaded;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -33,7 +34,11 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	[self updateLabels];
+
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.paymentCompleteViewController = self;
+    
+    [self updateLabels];
     
     if (!UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
         self.signOutWarning.frame = AlertLandscapeLocation;

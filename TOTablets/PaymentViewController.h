@@ -8,10 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "STPView.h"
-#import "LocationPickerViewController.h"
 #import "MBProgressHUD.h"
 
-@interface PaymentViewController : UITableViewController <STPViewDelegate, LocationPickerViewControllerDelegate, UITextFieldDelegate, UIAlertViewDelegate> {
+@interface PaymentViewController : UITableViewController <STPViewDelegate, UITextFieldDelegate, UIAlertViewDelegate> {
     MBProgressHUD *HUD;
 }
 

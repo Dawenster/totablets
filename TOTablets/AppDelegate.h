@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "PaymentViewController.h"
+#import "PaymentCompleteViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) PaymentViewController *paymentViewController;
+@property (strong, nonatomic) PaymentCompleteViewController *paymentCompleteViewController;
 
 @end

@@ -27,6 +27,8 @@
 @property (nonatomic, strong) IBOutlet UILabel *taxesLabel;
 @property (nonatomic, strong) IBOutlet UILabel *taxesAmount;
 @property (nonatomic, strong) IBOutlet UILabel *grandTotalAmount;
+@property (nonatomic, strong) IBOutlet UILabel *preAuthAmount;
+@property (nonatomic, strong) IBOutlet UITextView *termsAndConditions;
 @property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, strong) IBOutlet UILabel *fillInAllFieldsLabel;
 @property (nonatomic, strong) UIPopoverController *adminPopoverController;

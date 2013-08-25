@@ -31,6 +31,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     NSString *environmentURL;
     NSString *adminPassword;
     NSInteger rentalFee;
+    NSInteger preAuthAmout;
     int tax;
     float days;
     float subtotal;
@@ -44,8 +45,8 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 {
     [super viewDidLoad];
     
-//    environmentURL = @"http://localhost:3000";
-    environmentURL = @"https://www.totablets.com";
+    environmentURL = @"http://localhost:3000";
+//    environmentURL = @"https://www.totablets.com";
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.paymentViewController = self;
@@ -255,6 +256,9 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     publishableKey = res[@"publishable_key"];
     self.stripeView.key = publishableKey;
     adminPassword = res[@"admin_password"];
+    preAuthAmout = [res[@"pre_auth_amount"] intValue];
+    self.preAuthAmount.text = [NSString stringWithFormat:@"$%.02f %@", preAuthAmout / 100.0, currency];
+    self.termsAndConditions.text = res[@"terms_and_conditions"];
     
     NSDictionary *taxes = res[@"taxes"];
     tax = 0;
@@ -312,8 +316,8 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     NSString *urlString = [NSString stringWithFormat:@"%@/rentals", environmentURL];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     request.HTTPMethod = @"POST";
-    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&location=%@&rate=%d&tax_names=%@&name=%@&email=%@&stripe_token=%@&grand_total=%0.0f&currency=%@&device_name=%@",
-                          days, self.locationLabel.text, rentalFee, allTaxes, self.nameField.text, self.emailField.text, token.tokenId, grandTotal, currency, deviceUDID];
+    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&location=%@&rate=%d&tax_names=%@&name=%@&email=%@&stripe_token=%@&grand_total=%0.0f&currency=%@&device_name=%@&pre_auth_amount=%@",
+                          days, self.locationLabel.text, rentalFee, allTaxes, self.nameField.text, self.emailField.text, token.tokenId, grandTotal, currency, deviceUDID, self.preAuthAmount.text];
     NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSLog(@"Escaped Body: %@", escapedBody);

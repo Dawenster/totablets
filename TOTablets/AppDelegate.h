@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "PaymentViewController.h"
 #import "PaymentCompleteViewController.h"
+#import "AdminViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

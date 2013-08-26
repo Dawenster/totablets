@@ -30,8 +30,8 @@
 {
     [super viewDidLoad];
 
-    environmentURL = @"http://localhost:3000";
-//    environmentURL = @"https://www.totablets.com";
+//    environmentURL = @"http://localhost:3000";
+    environmentURL = @"https://www.totablets.com";
     
     self.contentSizeForViewInPopover = CGSizeMake(320, 120);
 }
@@ -184,12 +184,13 @@
     HUD.mode = MBProgressHUDModeCustomView;
     if ([command isEqualToString:@"unlock"]) {
         HUD.labelText = @"Device being unlocked - try pressing the home key in one minute.";
+        [self.paymentView.adminPopoverController dismissPopoverAnimated:YES];
     } else {
         HUD.labelText = @"Device will lock itself shortly.";
+        [self.paymentView.adminPopoverController dismissPopoverAnimated:YES];
         double delayInSeconds = 2.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self.paymentView.adminPopoverController dismissPopoverAnimated:YES];
             [self.paymentView.presentingViewController dismissViewControllerAnimated:YES completion:nil];
         });
     }

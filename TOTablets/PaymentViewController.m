@@ -30,8 +30,9 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     NSString *formattedEndDateString;
     NSString *environmentURL;
     NSString *adminPassword;
+    NSString *termsAndConditions;
     NSInteger rentalFee;
-    NSInteger preAuthAmout;
+    NSInteger preAuthAmount;
     int tax;
     float days;
     float subtotal;
@@ -45,8 +46,8 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 {
     [super viewDidLoad];
     
-    environmentURL = @"http://localhost:3000";
-//    environmentURL = @"https://www.totablets.com";
+//    environmentURL = @"http://localhost:3000";
+    environmentURL = @"https://www.totablets.com";
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.paymentViewController = self;
@@ -256,9 +257,10 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     publishableKey = res[@"publishable_key"];
     self.stripeView.key = publishableKey;
     adminPassword = res[@"admin_password"];
-    preAuthAmout = [res[@"pre_auth_amount"] intValue];
-    self.preAuthAmount.text = [NSString stringWithFormat:@"$%.02f %@", preAuthAmout / 100.0, currency];
-    self.termsAndConditions.text = res[@"terms_and_conditions"];
+    preAuthAmount = [res[@"pre_auth_amount"] intValue];
+    self.preAuthAmountLabel.text = [NSString stringWithFormat:@"$%.02f %@", preAuthAmount / 100.0, currency];
+    termsAndConditions = res[@"terms_and_conditions"];
+    self.termsAndConditionsTextView.text = termsAndConditions;
     
     NSDictionary *taxes = res[@"taxes"];
     tax = 0;
@@ -316,8 +318,9 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     NSString *urlString = [NSString stringWithFormat:@"%@/rentals", environmentURL];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     request.HTTPMethod = @"POST";
-    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&location=%@&rate=%d&tax_names=%@&name=%@&email=%@&stripe_token=%@&grand_total=%0.0f&currency=%@&device_name=%@&pre_auth_amount=%@",
-                          days, self.locationLabel.text, rentalFee, allTaxes, self.nameField.text, self.emailField.text, token.tokenId, grandTotal, currency, deviceUDID, self.preAuthAmount.text];
+    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&location=%@&rate=%d&tax_names=%@&name=%@&email=%@&stripe_token=%@&grand_total=%0.0f&currency=%@&device_name=%@&pre_auth_amount=%d",
+                          days, self.locationLabel.text, rentalFee, allTaxes, self.nameField.text, self.emailField.text, token.tokenId, grandTotal, currency, deviceUDID, preAuthAmount];
+    
     NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSLog(@"Escaped Body: %@", escapedBody);
@@ -339,7 +342,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
                                    double delayInSeconds = 2.0;
                                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                                       [self sendCustomerData:token rentalChargeID:res[@"rental_charge_id"] preAuthID:res[@"pre_auth_id"] preAuthAmount:[res[@"pre_auth_amount"] intValue]];
+                                       [self sendCustomerData:token rentalChargeID:res[@"rental_charge_id"] preAuthID:res[@"pre_auth_id"]];
                                        [self performSegueWithIdentifier:@"PaymentComplete" sender:nil];
                                    });
                                } else {
@@ -350,15 +353,15 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
                            }];
 }
 
-- (void)sendCustomerData:(STPToken *)token rentalChargeID:(NSString *)rentalChargeID preAuthID:(NSString *)preAuthID preAuthAmount:(int)preAuthAmount
+- (void)sendCustomerData:(STPToken *)token rentalChargeID:(NSString *)rentalChargeID preAuthID:(NSString *)preAuthID
 {
     NSString *deviceUDID = [[UIDevice currentDevice] name];
     
     NSString *urlString = [NSString stringWithFormat:@"%@/capture_customer_data", environmentURL];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     request.HTTPMethod = @"POST";
-    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&start_date=%@&end_date=%@&location=%@&location_detail=%@&email=%@&rate=%d&subtotal=%0.0f&tax_names=%@&tax_percentage=%d&tax_amount=%0.0f&grand_total=%0.0f&currency=%@&device_name=%@&rental_charge_id=%@&pre_auth_id=%@&pre_auth_amount=%d",
-                          days, startDate, endDate, self.locationLabel.text, self.locationDetailField.text, self.emailField.text, rentalFee, subtotal, allTaxes, tax, taxAmount, grandTotal, currency, deviceUDID, rentalChargeID, preAuthID, preAuthAmount];
+    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&start_date=%@&end_date=%@&location=%@&location_detail=%@&email=%@&rate=%d&subtotal=%0.0f&tax_names=%@&tax_percentage=%d&tax_amount=%0.0f&grand_total=%0.0f&currency=%@&device_name=%@&rental_charge_id=%@&pre_auth_id=%@&pre_auth_amount=%d&terms_and_conditions=%@",
+                          days, startDate, endDate, self.locationLabel.text, self.locationDetailField.text, self.emailField.text, rentalFee, subtotal, allTaxes, tax, taxAmount, grandTotal, currency, deviceUDID, rentalChargeID, preAuthID, preAuthAmount, termsAndConditions];
     NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSLog(@"Send Customer Data Escaped Body: %@", escapedBody);

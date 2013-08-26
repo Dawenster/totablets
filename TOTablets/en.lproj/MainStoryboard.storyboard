@@ -421,13 +421,13 @@ B. Usage
                         <outlet property="locationLabel" destination="xQm-iF-CTh" id="9p6-ix-BTW"/>
                         <outlet property="nameField" destination="hFW-gk-A1h" id="8T8-LA-ka7"/>
                         <outlet property="payButton" destination="UVt-en-JVE" id="03e-r6-1Fp"/>
-                        <outlet property="preAuthAmount" destination="asF-Rp-VMi" id="Z3D-jP-oA3"/>
+                        <outlet property="preAuthAmountLabel" destination="asF-Rp-VMi" id="OBm-Ty-ixY"/>
                         <outlet property="stepper" destination="w82-ij-HQq" id="RQU-hy-adj"/>
                         <outlet property="subtotalAmount" destination="OkX-P9-lfk" id="wvo-YY-rty"/>
                         <outlet property="subtotalLabel" destination="xdb-CU-DUw" id="b4e-PK-h49"/>
                         <outlet property="taxesAmount" destination="bti-Q6-XZw" id="V9s-wm-e12"/>
                         <outlet property="taxesLabel" destination="VT3-QO-spm" id="JXu-sS-TCV"/>
-                        <outlet property="termsAndConditions" destination="cxf-jP-7jL" id="5GP-oR-lIW"/>
+                        <outlet property="termsAndConditionsTextView" destination="cxf-jP-7jL" id="Gie-cu-mYE"/>
                         <segue destination="pjd-77-z2b" kind="modal" identifier="PaymentComplete" id="6r8-mX-ZqW"/>
                     </connections>
                 </tableViewController>

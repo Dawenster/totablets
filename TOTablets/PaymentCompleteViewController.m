@@ -34,7 +34,13 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+       
+    self.finishRental.hidden = YES;
+    self.upArrow.hidden = YES;
+    self.leftArrow.hidden = YES;
+    self.bottomArrow.hidden = YES;
+    self.rightArrow.hidden = YES;
+    
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.paymentCompleteViewController = self;
     
@@ -75,11 +81,24 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
     if (secondsRemaining < 0) {
         [timer invalidate];
         timer = nil;
-        self.messageLabel.text = @"Press the home button to begin.";
+        self.messageLabel.text = @"Click the home button to begin your rental (follow the yellow arrow).";
+        self.messageLabel.textColor = [UIColor yellowColor];
+        [self.messageLabel sizeToFit];
         self.rentalStartLabel.text = @"";
         self.secondsLabel.text = @"";
         self.timerLabel.font = [UIFont boldSystemFontOfSize:75.0];
         self.timerLabel.text = @"Enjoy!";
+        self.finishRental.hidden = NO;
+        
+        if (self.interfaceOrientation == UIInterfaceOrientationLandscapeLeft) {
+            self.leftArrow.hidden = NO;
+        } else if (self.interfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+            self.rightArrow.hidden = NO;
+        } else if (self.interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
+            self.upArrow.hidden = NO;
+        } else {
+            self.bottomArrow.hidden = NO;
+        }
     }
 }
 
@@ -87,11 +106,33 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
 {
     [super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
-    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation)) {
+    self.upArrow.hidden = YES;
+    self.leftArrow.hidden = YES;
+    self.bottomArrow.hidden = YES;
+    self.rightArrow.hidden = YES;
+    
+    if (toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft) {
+        if (secondsRemaining < 0) {
+            self.leftArrow.hidden = NO;
+        }
+        self.signOutWarning.frame = AlertLandscapeLocation;
+    } else if (toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
+        if (secondsRemaining < 0) {
+            self.rightArrow.hidden = NO;
+        }
+        self.signOutWarning.frame = AlertLandscapeLocation;
+    } else if (toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
+        if (secondsRemaining < 0) {
+            self.upArrow.hidden = NO;
+        }
         self.signOutWarning.frame = AlertPortraitLocation;
     } else {
-        self.signOutWarning.frame = AlertLandscapeLocation;
+        if (secondsRemaining < 0) {
+            self.bottomArrow.hidden = NO;
+        }
+        self.signOutWarning.frame = AlertPortraitLocation;
     }
+    
     [self.signOutWarning setNeedsDisplay];
 }
 

@@ -433,7 +433,7 @@ B. Usage
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AtV-hg-rd0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="958" y="-157"/>
+            <point key="canvasLocation" x="958" y="-129"/>
         </scene>
         <!--Payment Complete View Controller-->
         <scene sceneID="nr5-LO-uq6">
@@ -451,7 +451,7 @@ B. Usage
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Please wait while we load your apps." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pSh-B1-vDo">
-                                <rect key="frame" x="105" y="438" width="524" height="36"/>
+                                <rect key="frame" x="105" y="438" width="557" height="36"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -550,18 +550,51 @@ B. Usage
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CXY-Vj-lSi">
+                                <rect key="frame" x="650" y="9" width="108" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Admin lock" backgroundImage="YellowButton.png">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted" backgroundImage="YellowButtonPressed.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="down_arrow.png" id="Uyx-LD-cUx">
+                                <rect key="frame" x="368" y="995" width="32" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="up_arrow.png" id="TjK-DQ-oYA">
+                                <rect key="frame" x="368" y="0.0" width="32" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="left_arrow.png" id="tAI-g9-BdT">
+                                <rect key="frame" x="0.0" y="475" width="29" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="right_arrow.png" id="vYF-YY-hWH">
+                                <rect key="frame" x="739" y="475" width="29" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="bottomArrow" destination="Uyx-LD-cUx" id="h47-xl-5Yx"/>
                         <outlet property="emailLabel" destination="X4y-zF-phK" id="oS9-BQ-IV1"/>
                         <outlet property="endDateLabel" destination="mk7-qZ-dMe" id="28O-e3-Ygh"/>
+                        <outlet property="finishRental" destination="CXY-Vj-lSi" id="bzV-HG-giC"/>
+                        <outlet property="leftArrow" destination="tAI-g9-BdT" id="yNF-Mz-vc2"/>
                         <outlet property="messageLabel" destination="pSh-B1-vDo" id="GH0-qp-Umt"/>
                         <outlet property="rentalStartLabel" destination="HBd-1V-c83" id="7we-RO-1vx"/>
+                        <outlet property="rightArrow" destination="vYF-YY-hWH" id="bvw-xg-L5t"/>
                         <outlet property="secondsLabel" destination="gVw-rf-TvU" id="feP-we-sLZ"/>
                         <outlet property="signOutWarning" destination="qsA-le-3jq" id="B83-pV-2Tg"/>
                         <outlet property="timerLabel" destination="B9V-LA-82q" id="70E-PW-z3D"/>
                         <outlet property="titleLabel" destination="LSE-KG-ALK" id="HXL-0T-PwQ"/>
+                        <outlet property="upArrow" destination="TjK-DQ-oYA" id="1oz-pk-Qoi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cpJ-V2-1d6" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -576,6 +609,10 @@ B. Usage
         <image name="YellowButton.png" width="204" height="42"/>
         <image name="YellowButtonPressed.png" width="204" height="42"/>
         <image name="alert_icon.png" width="250" height="250"/>
+        <image name="down_arrow.png" width="222" height="182"/>
+        <image name="left_arrow.png" width="182" height="222"/>
+        <image name="right_arrow.png" width="182" height="222"/>
+        <image name="up_arrow.png" width="222" height="182"/>
         <image name="white-check-mark.gif" width="50" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

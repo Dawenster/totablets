@@ -22,5 +22,10 @@
 @property (nonatomic, strong) IBOutlet UILabel *rentalStartLabel;
 @property (nonatomic, strong) IBOutlet UILabel *secondsLabel;
 @property (nonatomic, strong) IBOutlet UIView *signOutWarning;
+@property (nonatomic, strong) IBOutlet UIButton *finishRental;
+@property (nonatomic, strong) IBOutlet UIImageView *upArrow;
+@property (nonatomic, strong) IBOutlet UIImageView *bottomArrow;
+@property (nonatomic, strong) IBOutlet UIImageView *leftArrow;
+@property (nonatomic, strong) IBOutlet UIImageView *rightArrow;
 
 @end

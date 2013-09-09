@@ -82,7 +82,7 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
     if (secondsRemaining < 0) {
         [timer invalidate];
         timer = nil;
-        self.messageLabel.text = @"Click the home button to begin your rental (follow the yellow arrow).";
+        self.messageLabel.text = @"Click the home button to use your iPad (follow the yellow arrow).";
         self.messageLabel.textColor = [UIColor yellowColor];
         [self.messageLabel sizeToFit];
         self.rentalStartLabel.text = @"";

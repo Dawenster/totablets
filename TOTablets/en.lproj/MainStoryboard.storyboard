@@ -563,19 +563,19 @@ B. Usage
                                 </state>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="down_arrow.png" id="Uyx-LD-cUx">
-                                <rect key="frame" x="368" y="995" width="32" height="29"/>
+                                <rect key="frame" x="359" y="974" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="up_arrow.png" id="TjK-DQ-oYA">
-                                <rect key="frame" x="368" y="0.0" width="32" height="29"/>
+                                <rect key="frame" x="359" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="left_arrow.png" id="tAI-g9-BdT">
-                                <rect key="frame" x="0.0" y="475" width="29" height="33"/>
+                                <rect key="frame" x="0.0" y="467" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="right_arrow.png" id="vYF-YY-hWH">
-                                <rect key="frame" x="739" y="475" width="29" height="33"/>
+                                <rect key="frame" x="718" y="467" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
@@ -615,6 +615,56 @@ B. Usage
         <image name="up_arrow.png" width="222" height="182"/>
         <image name="white-check-mark.gif" width="50" height="50"/>
     </resources>
+    <classes>
+        <class className="InfoViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/InfoViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
+            </relationships>
+        </class>
+        <class className="PaymentCompleteViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PaymentCompleteViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="bottomArrow" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="emailLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="endDateLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="finishRental" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="leftArrow" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="messageLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rentalStartLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="rightArrow" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="secondsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="signOutWarning" candidateClass="UIView"/>
+                <relationship kind="outlet" name="timerLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="upArrow" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="PaymentViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/PaymentViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="adminButtonPressed:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="action" name="cancel:"/>
+                <relationship kind="action" name="changeDays"/>
+                <relationship kind="action" name="pay"/>
+                <relationship kind="outlet" name="daysLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="fillInAllFieldsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="grandTotalAmount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="locationDetailField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="locationLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="preAuthAmountLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="stepper" candidateClass="UIStepper"/>
+                <relationship kind="outlet" name="subtotalAmount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="subtotalLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taxesAmount" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="taxesLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="termsAndConditionsTextView" candidateClass="UITextView"/>
+            </relationships>
+        </class>
+    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

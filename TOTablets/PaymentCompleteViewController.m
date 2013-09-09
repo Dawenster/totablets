@@ -34,15 +34,16 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-       
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.paymentCompleteViewController = self;
+//    appDelegate.endDate = [NSDate date];
+    
     self.finishRental.hidden = YES;
     self.upArrow.hidden = YES;
     self.leftArrow.hidden = YES;
     self.bottomArrow.hidden = YES;
     self.rightArrow.hidden = YES;
-    
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    appDelegate.paymentCompleteViewController = self;
     
     [self updateLabels];
     
@@ -64,7 +65,7 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
 {
     self.titleLabel.text = [NSString stringWithFormat:@"Thank you, %@, for renting with %@ :)", self.customerName, self.locationName];
     self.emailLabel.text = [NSString stringWithFormat:@"Your receipt has been emailed to %@", self.email];
-    self.endDateLabel.text = [NSString stringWithFormat:@"You have this iPad until %@", self.endDate];
+    self.endDateLabel.text = [NSString stringWithFormat:@"You have this iPad until %@", self.endDateString];
 }
 
 - (void)updateCountdown

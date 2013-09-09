@@ -16,5 +16,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) PaymentViewController *paymentViewController;
 @property (strong, nonatomic) PaymentCompleteViewController *paymentCompleteViewController;
+@property (nonatomic, strong) NSDate *endDate;
 
 @end

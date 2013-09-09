@@ -50,6 +50,12 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     environmentURL = @"https://www.totablets.com";
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    
+//    if (appDelegate.endDate < [NSDate date]) {
+//        appDelegate.endDate = nil;
+//        [self dismissViewControllerAnimated:YES completion:nil];
+//    }
+    
     appDelegate.paymentViewController = self;
     
     self.locationDetailField.delegate = self;
@@ -67,8 +73,9 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     [self.view addSubview:self.stripeView];
     
     self.payButton.enabled = NO;
-    locationName = @"Hotel";
-    self.locationLabel.text = locationName;
+    locationName = @"Loading...";
+    currency = @"";
+    self.preAuthAmountLabel.text = @"$0.00 ";
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
                                                  initWithTarget:self action:@selector(hideKeyboard:)];
@@ -448,7 +455,9 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
         controller.customerName = self.nameField.text;
         controller.locationName = locationName;
         controller.email = self.emailField.text;
-        controller.endDate = formattedEndDateString;
+        controller.endDateString = formattedEndDateString;
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        appDelegate.endDate = endDate;
     }
 }
 

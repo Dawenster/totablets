@@ -551,7 +551,7 @@ B. Usage
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="CXY-Vj-lSi">
-                                <rect key="frame" x="650" y="9" width="108" height="34"/>
+                                <rect key="frame" x="650" y="9" width="108" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Admin lock" backgroundImage="YellowButton.png">

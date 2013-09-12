@@ -14,6 +14,9 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    //    self.environmentURL = @"http://localhost:3000";
+    self.environmentURL = @"https://www.totablets.com";
+    
     return YES;
 }
 							
@@ -46,9 +49,6 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-
-//    NSLog([NSString stringWithFormat:@"Now: %@", [NSDate date]]);
-//    NSLog([NSString stringWithFormat:@"End date: %@", self.endDate]);
     
     if ([self.endDate earlierDate:[NSDate date]] == self.endDate) {
         self.endDate = nil;

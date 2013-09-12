@@ -17,5 +17,6 @@
 @property (strong, nonatomic) PaymentViewController *paymentViewController;
 @property (strong, nonatomic) PaymentCompleteViewController *paymentCompleteViewController;
 @property (nonatomic, strong) NSDate *endDate;
+@property (nonatomic, strong) NSString *environmentURL;
 
 @end

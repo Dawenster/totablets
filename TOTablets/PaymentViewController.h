@@ -17,8 +17,10 @@
 @property (nonatomic, strong) IBOutlet UILabel *daysLabel;
 @property (nonatomic, strong) IBOutlet UILabel *locationLabel;
 @property (nonatomic, strong) IBOutlet UITextField *locationDetailField;
+@property (nonatomic, strong) IBOutlet UILabel *nameLabel;
 @property (nonatomic, strong) IBOutlet UITextField *nameField;
 @property (nonatomic, strong) IBOutlet UITextField *emailField;
+@property (nonatomic, strong) IBOutlet UILabel *creditCardLabel;
 @property STPView* stripeView;
 @property (nonatomic, strong) IBOutlet UIButton *payButton;
 @property (nonatomic, weak) IBOutlet UIStepper *stepper;
@@ -32,9 +34,12 @@
 @property (nonatomic, strong) NSMutableData *responseData;
 @property (nonatomic, strong) IBOutlet UILabel *fillInAllFieldsLabel;
 @property (nonatomic, strong) UIPopoverController *adminPopoverController;
+@property (nonatomic, strong) IBOutlet UILabel *adultContentLabel;
+@property (nonatomic, strong) IBOutlet UISwitch *adultContentSwitch;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)changeDays;
 - (IBAction)pay;
+- (IBAction)restrictionToggled:(id)sender;
 
 @end

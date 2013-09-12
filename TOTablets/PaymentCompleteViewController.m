@@ -20,6 +20,7 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
     NSTimer *timer;
     int secondsRemaining;
     bool firstTimeLoaded;
+    NSString *environmentURL;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -37,6 +38,7 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
     
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.paymentCompleteViewController = self;
+    environmentURL = appDelegate.environmentURL;
 //    appDelegate.endDate = [NSDate date];
     
     self.finishRental.hidden = YES;
@@ -52,6 +54,7 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
     }
     
     timer = [NSTimer scheduledTimerWithTimeInterval: 1.0 target:self selector:@selector(updateCountdown) userInfo:nil repeats: YES];
+    
     secondsRemaining = 60;
 }
 
@@ -135,6 +138,93 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
     }
     
     [self.signOutWarning setNeedsDisplay];
+}
+
+- (void)finishRentalLock
+{
+    [self areYouSure];
+}
+
+- (void)areYouSure
+{
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                      message:@"Are you sure you want to end this rental and lock this device?"
+                                                     delegate:self
+                                            cancelButtonTitle:NSLocalizedString(@"No", @"No")
+                                            otherButtonTitles:@"Yes", nil];
+    [message show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        HUD.labelText = @"Ending current rental and locking device";
+        [self adminCommand:@"lock"];
+    }
+}
+
+- (void)adminCommand:(NSString *)command
+{
+    NSString *deviceUDID = [[UIDevice currentDevice] name];
+    self.responseData = [NSMutableData data];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/admin_command", environmentURL];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+    request.HTTPMethod = @"POST";
+    NSString *body     = [NSString stringWithFormat:@"ipad_name=%@&command=%@&origin=%@", deviceUDID, command, @"finish_rental"];
+    NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"Escaped Body: %@", escapedBody);
+    
+    request.HTTPBody = [escapedBody dataUsingEncoding:NSUTF8StringEncoding];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSLog(@"Connection description: %@",connection.description);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"didReceiveResponse");
+    [self.responseData setLength:0];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [self.responseData appendData:data];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSLog(@"didFailWithError");
+    NSLog(@"Connection failed: %@", [error description]);
+    [self noConnectionError];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    NSLog(@"connectionDidFinishLoading");
+    NSLog(@"Succeeded! Received %d bytes of data",[self.responseData length]);
+    
+    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+    HUD.mode = MBProgressHUDModeCustomView;
+    HUD.labelText = @"Device will lock itself shortly.";
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.endDate = [NSDate date];
+    
+    [appDelegate.paymentCompleteViewController dismissViewControllerAnimated:YES completion:nil];
+    double delayInSeconds = 1.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [appDelegate.paymentViewController dismissViewControllerAnimated:YES completion:nil];
+    });
+}
+
+- (void)noConnectionError
+{
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                      message:@"No internet connection - please see the front desk for assistance."
+                                                     delegate:self
+                                            cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                            otherButtonTitles:nil];
+    [message show];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "AdminViewController.h"
+#import "AppDelegate.h"
 
 @interface AdminViewController ()
 
@@ -30,8 +31,8 @@
 {
     [super viewDidLoad];
 
-//    environmentURL = @"http://localhost:3000";
-    environmentURL = @"https://www.totablets.com";
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    environmentURL = appDelegate.environmentURL;
     
     self.contentSizeForViewInPopover = CGSizeMake(320, 120);
 }

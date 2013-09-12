@@ -13,8 +13,8 @@
 #import "AdminViewController.h"
 #import "AppDelegate.h"
 
-const CGRect StripePortraitLocation = { { 452.0f, 395.0f }, { 290.0f, 55.0f } };
-const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } };
+const CGRect StripePortraitLocation = { { 452.0f, 439.0f }, { 290.0f, 55.0f } };
+const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } };
 
 @interface PaymentViewController ()
 
@@ -46,21 +46,16 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 {
     [super viewDidLoad];
     
-//    environmentURL = @"http://localhost:3000";
-    environmentURL = @"https://www.totablets.com";
-    
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    
-//    if (appDelegate.endDate < [NSDate date]) {
-//        appDelegate.endDate = nil;
-//        [self dismissViewControllerAnimated:YES completion:nil];
-//    }
-    
     appDelegate.paymentViewController = self;
+    environmentURL = appDelegate.environmentURL;
     
     self.locationDetailField.delegate = self;
     self.nameField.delegate = self;
     self.emailField.delegate = self;
+    
+    [self.nameLabel sizeToFit];
+    [self.creditCardLabel sizeToFit];
     
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
     
@@ -76,6 +71,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
     locationName = @"Loading...";
     currency = @"";
     self.preAuthAmountLabel.text = @"$0.00 ";
+    self.adultContentLabel.hidden = YES;
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
                                                  initWithTarget:self action:@selector(hideKeyboard:)];
@@ -144,7 +140,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     switch (section) {
-        case 0:return 1;
+        case 0:return 2;
         case 1:return 2;
         case 2:return 3;
         case 3:return 5;
@@ -183,6 +179,17 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 395.0f }, { 290.0f, 55.0f } }
 - (IBAction)changeDays
 {
     [self updateLabels];
+}
+
+- (IBAction)restrictionToggled:(id)sender
+{
+    UISwitch *adultContentSwitch = (UISwitch *)sender;
+    if ([adultContentSwitch isOn]) {
+        self.adultContentLabel.hidden = NO;
+//        [self.adultContentLabel sizeToFit];
+    } else {
+        self.adultContentLabel.hidden = YES;
+    }
 }
 
 - (void)stripeView:(STPView *)view withCard:(PKCard *)card isValid:(BOOL)valid

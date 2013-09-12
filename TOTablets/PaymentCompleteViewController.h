@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBProgressHUD.h"
 
-@interface PaymentCompleteViewController : UIViewController
+@interface PaymentCompleteViewController : UIViewController <UIAlertViewDelegate> {
+    MBProgressHUD *HUD;
+}
 
 @property (nonatomic, strong) NSString *customerName;
 @property (nonatomic, strong) NSString *locationName;
@@ -27,5 +30,8 @@
 @property (nonatomic, strong) IBOutlet UIImageView *bottomArrow;
 @property (nonatomic, strong) IBOutlet UIImageView *leftArrow;
 @property (nonatomic, strong) IBOutlet UIImageView *rightArrow;
+@property (nonatomic, strong) NSMutableData *responseData;
+
+- (IBAction)finishRentalLock;
 
 @end

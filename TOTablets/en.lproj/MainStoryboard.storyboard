@@ -71,10 +71,10 @@
                             </items>
                         </navigationBar>
                         <sections>
-                            <tableViewSection headerTitle="Rental duration" id="VeY-HS-aOo">
+                            <tableViewSection headerTitle="Rental" id="VeY-HS-aOo">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" id="RHt-P5-jY0">
-                                        <rect key="frame" x="0.0" y="78" width="768" height="46"/>
+                                        <rect key="frame" x="0.0" y="78" width="768" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="1" width="678" height="43"/>
@@ -105,12 +105,44 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" id="qgY-cz-vH4">
+                                        <rect key="frame" x="0.0" y="123" width="768" height="45"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="45" y="0.0" width="678" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Adult content restriction" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="frf-qy-Ooa">
+                                                    <rect key="frame" x="10" y="12" width="198" height="21"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="sbb-Lk-HBp">
+                                                    <rect key="frame" x="593" y="8" width="79" height="27"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <action selector="restrictionToggled:" destination="Wuv-QI-Voh" eventType="valueChanged" id="K5g-3T-eKW"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="*Safari will be disabled; a content-safe browser is available" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9zd-ZS-fmv">
+                                                    <rect key="frame" x="220" y="16" width="365" height="16"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="13"/>
+                                                    <color key="textColor" red="0.21960784310000001" green="0.3294117647" blue="0.52941176469999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                             <tableViewSection headerTitle="Hotel information" id="llM-hf-Mfp">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" textLabel="mf6-Zb-fXL" detailTextLabel="xQm-iF-CTh" style="IBUITableViewCellStyleValue1" id="Lb1-JD-q9Z">
-                                        <rect key="frame" x="0.0" y="168" width="768" height="45"/>
+                                        <rect key="frame" x="0.0" y="212" width="768" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="1" width="678" height="43"/>
@@ -135,7 +167,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" id="Gv3-C5-hY2">
-                                        <rect key="frame" x="0.0" y="213" width="768" height="45"/>
+                                        <rect key="frame" x="0.0" y="257" width="768" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="0.0" width="678" height="43"/>
@@ -163,14 +195,14 @@
                             <tableViewSection headerTitle="Payment information" id="wxs-DV-2GB">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" id="GoV-Dq-dIb">
-                                        <rect key="frame" x="0.0" y="302" width="768" height="45"/>
+                                        <rect key="frame" x="0.0" y="346" width="768" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="1" width="678" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="f7C-eo-YB9">
-                                                    <rect key="frame" x="10" y="11" width="47" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Name" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="f7C-eo-YB9">
+                                                    <rect key="frame" x="10" y="11" width="85" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -187,14 +219,14 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" id="sA0-uD-1Jf">
-                                        <rect key="frame" x="0.0" y="347" width="768" height="44"/>
+                                        <rect key="frame" x="0.0" y="391" width="768" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="0.0" width="678" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Email" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Bj-Un-QbJ">
-                                                    <rect key="frame" x="10" y="11" width="46" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Email" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9Bj-Un-QbJ">
+                                                    <rect key="frame" x="10" y="11" width="84" height="21"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -211,14 +243,14 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" id="YtC-UF-RF8">
-                                        <rect key="frame" x="0.0" y="391" width="768" height="45"/>
+                                        <rect key="frame" x="0.0" y="435" width="768" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="0.0" width="678" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Credit card" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8QY-ck-isC">
-                                                    <rect key="frame" x="10" y="11" width="90" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Credit card" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="8QY-ck-isC">
+                                                    <rect key="frame" x="10" y="11" width="156" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -233,7 +265,7 @@
                             <tableViewSection headerTitle="Confirmation" id="Gdl-1D-UDO">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" textLabel="xdb-CU-DUw" detailTextLabel="OkX-P9-lfk" rowHeight="44" style="IBUITableViewCellStyleValue1" id="XAu-mD-DqT">
-                                        <rect key="frame" x="0.0" y="480" width="768" height="45"/>
+                                        <rect key="frame" x="0.0" y="524" width="768" height="45"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="1" width="678" height="43"/>
@@ -258,7 +290,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" textLabel="VT3-QO-spm" detailTextLabel="bti-Q6-XZw" rowHeight="44" style="IBUITableViewCellStyleValue1" id="Am4-yG-dDb">
-                                        <rect key="frame" x="0.0" y="525" width="768" height="44"/>
+                                        <rect key="frame" x="0.0" y="569" width="768" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="0.0" width="678" height="43"/>
@@ -283,7 +315,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" textLabel="jeZ-iq-7JA" detailTextLabel="ZQe-NZ-f7Z" rowHeight="44" style="IBUITableViewCellStyleValue1" id="cdu-px-hKf">
-                                        <rect key="frame" x="0.0" y="569" width="768" height="44"/>
+                                        <rect key="frame" x="0.0" y="613" width="768" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="0.0" width="678" height="43"/>
@@ -308,7 +340,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" textLabel="hyY-46-Vw2" detailTextLabel="asF-Rp-VMi" rowHeight="44" style="IBUITableViewCellStyleValue1" id="IS8-M6-r8E">
-                                        <rect key="frame" x="0.0" y="613" width="768" height="44"/>
+                                        <rect key="frame" x="0.0" y="657" width="768" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="0.0" width="678" height="43"/>
@@ -333,7 +365,7 @@
                                         </view>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PaymentCell" rowHeight="333" id="sVI-Uh-HXJ">
-                                        <rect key="frame" x="0.0" y="657" width="768" height="334"/>
+                                        <rect key="frame" x="0.0" y="701" width="768" height="334"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="45" y="0.0" width="678" height="332"/>
@@ -413,6 +445,9 @@ B. Usage
                     </tableView>
                     <navigationItem key="navigationItem" id="GiC-Lk-86B"/>
                     <connections>
+                        <outlet property="adultContentLabel" destination="9zd-ZS-fmv" id="vjK-Va-Vgm"/>
+                        <outlet property="adultContentSwitch" destination="sbb-Lk-HBp" id="gq3-cP-reK"/>
+                        <outlet property="creditCardLabel" destination="8QY-ck-isC" id="bsL-3x-tCM"/>
                         <outlet property="daysLabel" destination="TPh-pK-gYu" id="KID-iN-d1R"/>
                         <outlet property="emailField" destination="C3B-sq-ZRy" id="XCe-lu-t9N"/>
                         <outlet property="fillInAllFieldsLabel" destination="3Py-Hu-vQL" id="6ax-1F-b87"/>
@@ -420,6 +455,7 @@ B. Usage
                         <outlet property="locationDetailField" destination="qPK-zq-7yZ" id="aph-sN-0RT"/>
                         <outlet property="locationLabel" destination="xQm-iF-CTh" id="9p6-ix-BTW"/>
                         <outlet property="nameField" destination="hFW-gk-A1h" id="8T8-LA-ka7"/>
+                        <outlet property="nameLabel" destination="f7C-eo-YB9" id="MGI-sh-jI7"/>
                         <outlet property="payButton" destination="UVt-en-JVE" id="03e-r6-1Fp"/>
                         <outlet property="preAuthAmountLabel" destination="asF-Rp-VMi" id="OBm-Ty-ixY"/>
                         <outlet property="stepper" destination="w82-ij-HQq" id="RQU-hy-adj"/>
@@ -561,6 +597,9 @@ B. Usage
                                 <state key="highlighted" backgroundImage="YellowButtonPressed.png">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="finishRentalLock" destination="pjd-77-z2b" eventType="touchUpInside" id="T8g-th-fCg"/>
+                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="down_arrow.png" id="Uyx-LD-cUx">
                                 <rect key="frame" x="359" y="974" width="50" height="50"/>
@@ -625,6 +664,7 @@ B. Usage
         <class className="PaymentCompleteViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PaymentCompleteViewController.h"/>
             <relationships>
+                <relationship kind="action" name="finishRentalLock"/>
                 <relationship kind="outlet" name="bottomArrow" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="emailLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="endDateLabel" candidateClass="UILabel"/>
@@ -647,6 +687,10 @@ B. Usage
                 <relationship kind="action" name="cancel:"/>
                 <relationship kind="action" name="changeDays"/>
                 <relationship kind="action" name="pay"/>
+                <relationship kind="action" name="restrictionToggled:"/>
+                <relationship kind="outlet" name="adultContentLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="adultContentSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="creditCardLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="daysLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="fillInAllFieldsLabel" candidateClass="UILabel"/>
@@ -654,6 +698,7 @@ B. Usage
                 <relationship kind="outlet" name="locationDetailField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="locationLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nameField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="preAuthAmountLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="stepper" candidateClass="UIStepper"/>

@@ -70,6 +70,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     self.payButton.enabled = NO;
     locationName = @"Loading...";
     currency = @"";
+    allTaxes = @"N/A";
     self.preAuthAmountLabel.text = @"$0.00 ";
     self.adultContentLabel.hidden = YES;
     

@@ -147,7 +147,7 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
 
 - (void)areYouSure
 {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Confirm End of Rental"
                                                       message:@"Are you sure you want to end this rental and lock this device?"
                                                      delegate:self
                                             cancelButtonTitle:NSLocalizedString(@"No", @"No")

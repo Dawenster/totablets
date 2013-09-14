@@ -34,6 +34,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     NSString *restrictContent;
     NSInteger rentalFee;
     NSInteger preAuthAmount;
+    NSDictionary *notifications;
     int tax;
     float days;
     float subtotal;
@@ -278,6 +279,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     self.preAuthAmountLabel.text = [NSString stringWithFormat:@"$%.02f %@", preAuthAmount / 100.0, currency];
     termsAndConditions = res[@"terms_and_conditions"];
     self.termsAndConditionsTextView.text = termsAndConditions;
+    notifications = res[@"notifications"];
     
     NSDictionary *taxes = res[@"taxes"];
     tax = 0;
@@ -364,6 +366,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
                                    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                                    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
                                        [self sendCustomerData:token rentalChargeID:res[@"rental_charge_id"] preAuthID:res[@"pre_auth_id"]];
+                                       [self setNotifications];
                                        [self performSegueWithIdentifier:@"PaymentComplete" sender:nil];
                                    });
                                } else {
@@ -396,6 +399,51 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
                                    NSLog(@"%@", error.localizedDescription);
                                }
                            }];
+}
+
+- (void)setNotifications
+{
+    NSDate *initialNotificationDate = [NSDate dateWithTimeIntervalSinceNow:120];
+    UILocalNotification *initialNotification = [[UILocalNotification alloc] init];
+    initialNotification.fireDate = initialNotificationDate;
+    initialNotification.timeZone = [NSTimeZone defaultTimeZone];
+    initialNotification.alertBody = @"Hope you're enjoying your iPad! You can always check back in the TO Tablets app to see when your rental ends.";
+    initialNotification.soundName = UILocalNotificationDefaultSoundName;
+    [[UIApplication sharedApplication] scheduleLocalNotification:initialNotification];
+    
+    for (id key in notifications) {
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.timeZone = [NSTimeZone defaultTimeZone];
+        localNotification.alertBody = key;
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        
+        if (notifications[key][2] != [NSNull null]) {
+            NSDictionary *url = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 notifications[key][2], @"url",
+                                 nil];
+            localNotification.userInfo = url;
+        }
+        
+        if (notifications[key][0] != [NSNull null]) {
+            if ([notifications[key][0] intValue] == 99) {
+                NSDate *notificationDate = [NSDate dateWithTimeIntervalSinceNow:70];
+                localNotification.fireDate = notificationDate;
+            } else {
+                NSDate *notificationDate = [NSDate dateWithTimeInterval:(-60 * 60 * [notifications[key][0] intValue]) sinceDate:endDate];
+                localNotification.fireDate = notificationDate;
+            }
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        } else {
+            NSCalendar *gregorian = [[NSCalendar alloc] initWithCalendarIdentifier: NSGregorianCalendar];
+            NSDateComponents *timeOfDay = [gregorian components: NSUIntegerMax fromDate: endDate];
+            [timeOfDay setHour: [notifications[key][1] intValue]];
+            [timeOfDay setMinute: 0];
+            [timeOfDay setSecond: 0];
+            NSDate *notificationDate = [gregorian dateFromComponents: timeOfDay];
+            localNotification.fireDate = notificationDate;
+        }
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+    }
 }
 
 - (void)handleError:(NSError *)error
@@ -470,17 +518,6 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
         controller.locationName = locationName;
         controller.email = self.emailField.text;
         controller.endDateString = formattedEndDateString;
-        
-        NSDate *date = [NSDate dateWithTimeIntervalSinceNow:120];
-        
-        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
-        localNotification.fireDate = date;
-        localNotification.timeZone = [NSTimeZone defaultTimeZone];
-        localNotification.alertBody = @"Hope you're enjoying your iPad! You can check back in the TO Tablets app to see when your rental ends.";
-        localNotification.soundName = UILocalNotificationDefaultSoundName;
-        
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
-        
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         appDelegate.endDate = endDate;
     }

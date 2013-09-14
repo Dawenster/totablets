@@ -296,6 +296,10 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
 {
     [self.view endEditing:YES];
     self.payButton.enabled = NO;
+    self.stepper.enabled = NO;
+    self.adultContentSwitch.enabled = NO;
+    self.cancelButton.enabled = NO;
+    self.adminButton.enabled = NO;
     
     if ([self reachable]) {
         HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -466,6 +470,17 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
         controller.locationName = locationName;
         controller.email = self.emailField.text;
         controller.endDateString = formattedEndDateString;
+        
+        NSDate *date = [NSDate dateWithTimeIntervalSinceNow:120];
+        
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.fireDate = date;
+        localNotification.timeZone = [NSTimeZone defaultTimeZone];
+        localNotification.alertBody = @"Hope you're enjoying your iPad! You can check back in the TO Tablets app to see when your rental ends.";
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         appDelegate.endDate = endDate;
     }

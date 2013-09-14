@@ -36,6 +36,8 @@
 @property (nonatomic, strong) UIPopoverController *adminPopoverController;
 @property (nonatomic, strong) IBOutlet UILabel *adultContentLabel;
 @property (nonatomic, strong) IBOutlet UISwitch *adultContentSwitch;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *cancelButton;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *adminButton;
 
 - (IBAction)cancel:(id)sender;
 - (IBAction)changeDays;

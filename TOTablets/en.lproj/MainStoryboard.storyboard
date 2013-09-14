@@ -443,10 +443,11 @@ B. Usage
                             <outlet property="delegate" destination="Wuv-QI-Voh" id="llq-Yp-tob"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="GiC-Lk-86B"/>
                     <connections>
+                        <outlet property="adminButton" destination="Vx8-xu-9fh" id="IAZ-ug-Ccf"/>
                         <outlet property="adultContentLabel" destination="9zd-ZS-fmv" id="vjK-Va-Vgm"/>
                         <outlet property="adultContentSwitch" destination="sbb-Lk-HBp" id="gq3-cP-reK"/>
+                        <outlet property="cancelButton" destination="x94-3W-Jny" id="nmU-gR-DC1"/>
                         <outlet property="creditCardLabel" destination="8QY-ck-isC" id="bsL-3x-tCM"/>
                         <outlet property="daysLabel" destination="TPh-pK-gYu" id="KID-iN-d1R"/>
                         <outlet property="emailField" destination="C3B-sq-ZRy" id="XCe-lu-t9N"/>
@@ -654,61 +655,6 @@ B. Usage
         <image name="up_arrow.png" width="222" height="182"/>
         <image name="white-check-mark.gif" width="50" height="50"/>
     </resources>
-    <classes>
-        <class className="InfoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/InfoViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="scrollView" candidateClass="UIScrollView"/>
-            </relationships>
-        </class>
-        <class className="PaymentCompleteViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PaymentCompleteViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="finishRentalLock"/>
-                <relationship kind="outlet" name="bottomArrow" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="emailLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="endDateLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="finishRental" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="leftArrow" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="messageLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rentalStartLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="rightArrow" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="secondsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="signOutWarning" candidateClass="UIView"/>
-                <relationship kind="outlet" name="timerLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="titleLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="upArrow" candidateClass="UIImageView"/>
-            </relationships>
-        </class>
-        <class className="PaymentViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/PaymentViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="cancel:"/>
-                <relationship kind="action" name="changeDays"/>
-                <relationship kind="action" name="pay"/>
-                <relationship kind="action" name="restrictionToggled:"/>
-                <relationship kind="outlet" name="adultContentLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="adultContentSwitch" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="creditCardLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="daysLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="emailField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="fillInAllFieldsLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="grandTotalAmount" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="locationDetailField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="locationLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nameField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="payButton" candidateClass="UIButton"/>
-                <relationship kind="outlet" name="preAuthAmountLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="stepper" candidateClass="UIStepper"/>
-                <relationship kind="outlet" name="subtotalAmount" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="subtotalLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="taxesAmount" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="taxesLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="termsAndConditionsTextView" candidateClass="UITextView"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

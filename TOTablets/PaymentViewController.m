@@ -31,6 +31,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     NSString *environmentURL;
     NSString *adminPassword;
     NSString *termsAndConditions;
+    NSString *restrictContent;
     NSInteger rentalFee;
     NSInteger preAuthAmount;
     int tax;
@@ -187,9 +188,10 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     UISwitch *adultContentSwitch = (UISwitch *)sender;
     if ([adultContentSwitch isOn]) {
         self.adultContentLabel.hidden = NO;
-//        [self.adultContentLabel sizeToFit];
+        restrictContent = @"yes";
     } else {
         self.adultContentLabel.hidden = YES;
+        restrictContent = @"no";
     }
 }
 
@@ -333,8 +335,8 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     NSString *urlString = [NSString stringWithFormat:@"%@/rentals", environmentURL];
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     request.HTTPMethod = @"POST";
-    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&location=%@&rate=%d&tax_names=%@&name=%@&email=%@&stripe_token=%@&grand_total=%0.0f&currency=%@&device_name=%@&pre_auth_amount=%d",
-                          days, self.locationLabel.text, rentalFee, allTaxes, self.nameField.text, self.emailField.text, token.tokenId, grandTotal, currency, deviceUDID, preAuthAmount];
+    NSString *body     = [NSString stringWithFormat:@"days=%0.0f&location=%@&rate=%d&tax_names=%@&name=%@&email=%@&stripe_token=%@&grand_total=%0.0f&currency=%@&device_name=%@&pre_auth_amount=%d&restrict_content=%@",
+                          days, self.locationLabel.text, rentalFee, allTaxes, self.nameField.text, self.emailField.text, token.tokenId, grandTotal, currency, deviceUDID, preAuthAmount, restrictContent];
     
     NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     

@@ -14,8 +14,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-    //    self.environmentURL = @"http://localhost:3000";
-    self.environmentURL = @"https://www.totablets.com";
+    self.environmentURL = @"http://localhost:3000";
+//    self.environmentURL = @"https://www.totablets.com";
     
     return YES;
 }

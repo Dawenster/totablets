@@ -467,7 +467,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
         
         if (notifications[key][0] != [NSNull null]) {
             if ([notifications[key][0] intValue] == 99) {
-                NSDate *notificationDate = [NSDate dateWithTimeIntervalSinceNow:70];
+                NSDate *notificationDate = [NSDate dateWithTimeIntervalSinceNow:120];
                 localNotification.fireDate = notificationDate;
             } else {
                 NSDate *notificationDate = [NSDate dateWithTimeInterval:(-60 * 60 * [notifications[key][0] intValue]) sinceDate:endDate];

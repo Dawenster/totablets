@@ -32,6 +32,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     NSString *adminPassword;
     NSString *termsAndConditions;
     NSString *restrictContent;
+    NSString *fillInAllFieldsText;
     NSInteger rentalFee;
     NSInteger preAuthAmount;
     NSDictionary *notifications;
@@ -40,6 +41,7 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     float subtotal;
     float taxAmount;
     float grandTotal;
+    bool readTandC;
 }
 
 @synthesize adminPopoverController = _adminPopoverController;
@@ -75,6 +77,8 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     allTaxes = @"N/A";
     self.preAuthAmountLabel.text = @"$0.00 ";
     self.adultContentLabel.hidden = YES;
+    readTandC = NO;
+    fillInAllFieldsText = @"Please fill in all fields and check the box above";
     
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc]
                                                  initWithTarget:self action:@selector(hideKeyboard:)];
@@ -168,6 +172,20 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     }
 }
 
+- (void)checkBox:(UIButton*)button
+{
+    button.selected = !button.selected;
+    readTandC = !readTandC;
+    [self fieldsFilledOut:0];
+    if (readTandC && [self.stripeView.paymentView isValid] && [self fieldsFilledOut:0]) {
+        self.payButton.enabled = YES;
+        self.fillInAllFieldsLabel.text = @"";
+    } else {
+        self.payButton.enabled = NO;
+        self.fillInAllFieldsLabel.text = fillInAllFieldsText;
+    }
+}
+
 - (UIPopoverController *)adminPopoverController
 {
     if (_adminPopoverController == nil) {
@@ -198,12 +216,12 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
 
 - (void)stripeView:(STPView *)view withCard:(PKCard *)card isValid:(BOOL)valid
 {
-    if (valid && [self fieldsFilledOut:0]) {
+    if (valid && readTandC && [self fieldsFilledOut:0]) {
         self.payButton.enabled = YES;
         self.fillInAllFieldsLabel.text = @"";
     } else {
         self.payButton.enabled = NO;
-        self.fillInAllFieldsLabel.text = @"Please fill in all fields";
+        self.fillInAllFieldsLabel.text = fillInAllFieldsText;
     }
 }
 
@@ -215,16 +233,39 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
         self.fillInAllFieldsLabel.text = @"";
     } else {
         self.payButton.enabled = NO;
-        self.fillInAllFieldsLabel.text = @"Please fill in all fields";
+        self.fillInAllFieldsLabel.text = fillInAllFieldsText;
     }
     return YES;
 }
 
 - (BOOL)fieldsFilledOut:(int)currentCharacters
 {
-    return ([self.locationDetailField.text length] + currentCharacters) > 0 &&
-            ([self.nameField.text length] + currentCharacters) > 0 &&
-            ([self.emailField.text length] + currentCharacters) > 0;
+    int locationDetailCharacterCount = 0;
+    int nameCharacterCount = 0;
+    int emailCharacterCount = 0;
+    
+    if (self.locationDetailField.isFirstResponder) {
+        locationDetailCharacterCount = currentCharacters;
+    } else if (self.nameField.isFirstResponder) {
+        nameCharacterCount = currentCharacters;
+    } else if (self.emailField.isFirstResponder) {
+        emailCharacterCount = currentCharacters;
+    }
+    
+    if (currentCharacters == 0 && (self.locationDetailField.isFirstResponder || self.nameField.isFirstResponder || self.emailField.isFirstResponder)) {
+        if (self.locationDetailField.isFirstResponder) {
+            locationDetailCharacterCount = -1;
+        } else if (self.nameField.isFirstResponder) {
+            nameCharacterCount = -1;
+        } else if (self.emailField.isFirstResponder) {
+            emailCharacterCount = -1;
+        }
+    }
+    
+    return ([self.locationDetailField.text length] + locationDetailCharacterCount) > 0 &&
+            ([self.nameField.text length] + nameCharacterCount) > 0 &&
+            ([self.emailField.text length] + emailCharacterCount) > 0 &&
+            readTandC;
 }
 
 - (void)locationInfo

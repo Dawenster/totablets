@@ -43,5 +43,6 @@
 - (IBAction)changeDays;
 - (IBAction)pay;
 - (IBAction)restrictionToggled:(id)sender;
+- (IBAction)checkBox:(id)sender;
 
 @end

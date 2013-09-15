@@ -7,6 +7,7 @@
 //
 
 #import "InfoViewController.h"
+#import "AppDelegate.h"
 
 @interface InfoViewController ()
 
@@ -17,12 +18,16 @@
     int offset;
     int offsetAmount;
     NSTimer *timer;
+    NSString *environmentURL;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.scrollView.delegate = self;
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    environmentURL = appDelegate.environmentURL;
     
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [self loadImages:self.interfaceOrientation];
@@ -103,6 +108,87 @@
     [timer invalidate];
     timer = nil;
     timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+}
+
+- (void)finishRentalLock
+{
+    [self areYouSure];
+}
+
+- (void)areYouSure
+{
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Confirm End of Rental"
+                                                      message:@"Are you sure you want to end this rental and lock this device?"
+                                                     delegate:self
+                                            cancelButtonTitle:NSLocalizedString(@"No", @"No")
+                                            otherButtonTitles:@"Yes", nil];
+    [message show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)
+    {
+        HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        HUD.labelText = @"Ending current rental and locking device";
+        [self adminCommand:@"lock"];
+    }
+}
+
+- (void)adminCommand:(NSString *)command
+{
+    NSString *deviceUDID = [[UIDevice currentDevice] name];
+    self.responseData = [NSMutableData data];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/admin_command", environmentURL];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+    request.HTTPMethod = @"POST";
+    NSString *body     = [NSString stringWithFormat:@"ipad_name=%@&command=%@&origin=%@", deviceUDID, command, @"finish_rental"];
+    NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"Escaped Body: %@", escapedBody);
+    
+    request.HTTPBody = [escapedBody dataUsingEncoding:NSUTF8StringEncoding];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSLog(@"Connection description: %@",connection.description);
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+    NSLog(@"didReceiveResponse");
+    [self.responseData setLength:0];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+    [self.responseData appendData:data];
+}
+
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
+    NSLog(@"didFailWithError");
+    NSLog(@"Connection failed: %@", [error description]);
+    [self noConnectionError];
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+    NSLog(@"connectionDidFinishLoading");
+    NSLog(@"Succeeded! Received %d bytes of data",[self.responseData length]);
+    
+    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+    HUD.mode = MBProgressHUDModeCustomView;
+    HUD.labelText = @"Device will lock itself shortly.";
+    [HUD hide:YES afterDelay:3];
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    appDelegate.endDate = [NSDate date];
+}
+
+- (void)noConnectionError
+{
+    UIAlertView *message = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", @"Error")
+                                                      message:@"No internet connection - please see the front desk for assistance."
+                                                     delegate:self
+                                            cancelButtonTitle:NSLocalizedString(@"OK", @"OK")
+                                            otherButtonTitles:nil];
+    [message show];
 }
 
 @end

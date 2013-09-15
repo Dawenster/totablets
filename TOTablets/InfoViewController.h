@@ -8,9 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "STPCard.h"
+#import "MBProgressHUD.h"
 
-@interface InfoViewController : UIViewController <UIScrollViewDelegate>
+@interface InfoViewController : UIViewController <UIScrollViewDelegate, UIAlertViewDelegate> {
+    MBProgressHUD *HUD;
+}
 
 @property (nonatomic, strong) IBOutlet UIScrollView *scrollView;
+@property (nonatomic, strong) NSMutableData *responseData;
+
+- (IBAction)finishRentalLock;
 
 @end

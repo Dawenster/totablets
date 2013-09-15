@@ -39,7 +39,6 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.paymentCompleteViewController = self;
     environmentURL = appDelegate.environmentURL;
-//    appDelegate.endDate = [NSDate date];
     
     self.finishRental.hidden = YES;
     self.upArrow.hidden = YES;

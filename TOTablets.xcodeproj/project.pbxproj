@@ -99,6 +99,10 @@
 		2630474B17B8554A001B5510 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2630474717B8554A001B5510 /* Default-Landscape~ipad.png */; };
 		2630474C17B8554A001B5510 /* Default-Portrait@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2630474817B8554A001B5510 /* Default-Portrait@2x~ipad.png */; };
 		2630474D17B8554A001B5510 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 2630474917B8554A001B5510 /* Default-Portrait~ipad.png */; };
+		265D4B9F17EAABBC006F6BB8 /* email-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 265D4B9E17EAABBC006F6BB8 /* email-icon.png */; };
+		265D4BA117EAAC1F006F6BB8 /* clock-icon.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 265D4BA017EAAC1F006F6BB8 /* clock-icon.jpeg */; };
+		265D4BA517EAAED2006F6BB8 /* alert-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 265D4BA417EAAED2006F6BB8 /* alert-icon.png */; };
+		265D4BA717EAC37A006F6BB8 /* padlock-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 265D4BA617EAC37A006F6BB8 /* padlock-icon.png */; };
 		269B726B17DD7558000B8259 /* down_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 269B726817DD7558000B8259 /* down_arrow.png */; };
 		269B726C17DD7558000B8259 /* left_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 269B726917DD7558000B8259 /* left_arrow.png */; };
 		269B726D17DD7558000B8259 /* right_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 269B726A17DD7558000B8259 /* right_arrow.png */; };
@@ -235,6 +239,10 @@
 		2630474717B8554A001B5510 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		2630474817B8554A001B5510 /* Default-Portrait@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait@2x~ipad.png"; sourceTree = "<group>"; };
 		2630474917B8554A001B5510 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		265D4B9E17EAABBC006F6BB8 /* email-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "email-icon.png"; sourceTree = "<group>"; };
+		265D4BA017EAAC1F006F6BB8 /* clock-icon.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "clock-icon.jpeg"; sourceTree = "<group>"; };
+		265D4BA417EAAED2006F6BB8 /* alert-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "alert-icon.png"; sourceTree = "<group>"; };
+		265D4BA617EAC37A006F6BB8 /* padlock-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "padlock-icon.png"; sourceTree = "<group>"; };
 		269B726817DD7558000B8259 /* down_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down_arrow.png; sourceTree = "<group>"; };
 		269B726917DD7558000B8259 /* left_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left_arrow.png; sourceTree = "<group>"; };
 		269B726A17DD7558000B8259 /* right_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_arrow.png; sourceTree = "<group>"; };
@@ -447,6 +455,10 @@
 		261EB890179858E900BE20B6 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				265D4BA617EAC37A006F6BB8 /* padlock-icon.png */,
+				265D4BA417EAAED2006F6BB8 /* alert-icon.png */,
+				265D4BA017EAAC1F006F6BB8 /* clock-icon.jpeg */,
+				265D4B9E17EAABBC006F6BB8 /* email-icon.png */,
 				269B727017E61889000B8259 /* box_checked.png */,
 				269B727117E61889000B8259 /* box_unchecked.png */,
 				269B726E17DD79DF000B8259 /* up_arrow.png */,
@@ -590,6 +602,7 @@
 				261EB8601794A1F500BE20B6 /* discover.png in Resources */,
 				261EB8611794A1F500BE20B6 /* discover@2x.png in Resources */,
 				261EB8621794A1F500BE20B6 /* jcb.png in Resources */,
+				265D4BA517EAAED2006F6BB8 /* alert-icon.png in Resources */,
 				261EB8631794A1F500BE20B6 /* jcb@2x.png in Resources */,
 				261EB8641794A1F500BE20B6 /* mastercard.png in Resources */,
 				261EB8651794A1F500BE20B6 /* mastercard@2x.png in Resources */,
@@ -611,6 +624,7 @@
 				261EB8AD179B0C2900BE20B6 /* map_portrait.jpg in Resources */,
 				261EB8AE179B0C2900BE20B6 /* netflix_landscape.jpg in Resources */,
 				261EB8AF179B0C2900BE20B6 /* netflix_portrait.jpg in Resources */,
+				265D4BA117EAAC1F006F6BB8 /* clock-icon.jpeg in Resources */,
 				261EB8B0179B0C2900BE20B6 /* skype_landscape.jpg in Resources */,
 				261EB8B1179B0C2900BE20B6 /* skype_portrait.png in Resources */,
 				261EB8B2179B0C2900BE20B6 /* vancouver_portrait.jpg in Resources */,
@@ -647,6 +661,7 @@
 				2630474317B8520A001B5510 /* iTunesArtwork.png in Resources */,
 				2630474417B8520A001B5510 /* iTunesArtwork@2x.png in Resources */,
 				2630474A17B8554A001B5510 /* Default-Landscape@2x~ipad.png in Resources */,
+				265D4B9F17EAABBC006F6BB8 /* email-icon.png in Resources */,
 				2630474B17B8554A001B5510 /* Default-Landscape~ipad.png in Resources */,
 				2630474C17B8554A001B5510 /* Default-Portrait@2x~ipad.png in Resources */,
 				2630474D17B8554A001B5510 /* Default-Portrait~ipad.png in Resources */,
@@ -656,6 +671,7 @@
 				269B726F17DD79DF000B8259 /* up_arrow.png in Resources */,
 				269B727217E61889000B8259 /* box_checked.png in Resources */,
 				269B727317E61889000B8259 /* box_unchecked.png in Resources */,
+				265D4BA717EAC37A006F6BB8 /* padlock-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -806,10 +822,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8016467A315A4C2787C2C935 /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = (
+					armv7,
+					armv6,
+					"$(ARCHS_STANDARD)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TOTablets/TOTablets-Prefix.pch";
 				INFOPLIST_FILE = "TOTablets/TOTablets-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -818,10 +842,18 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8016467A315A4C2787C2C935 /* Pods.xcconfig */;
 			buildSettings = {
+				ARCHS = (
+					armv7,
+					armv6,
+					"$(ARCHS_STANDARD)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TOTablets/TOTablets-Prefix.pch";
 				INFOPLIST_FILE = "TOTablets/TOTablets-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv6 armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

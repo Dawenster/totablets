@@ -13,8 +13,8 @@
 #import "AdminViewController.h"
 #import "AppDelegate.h"
 
-const CGRect StripePortraitLocation = { { 452.0f, 439.0f }, { 290.0f, 55.0f } };
-const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } };
+const CGRect StripePortraitLocation = { { 496.0f, 458.0f }, { 290.0f, 55.0f } };
+const CGRect StripeLandscapeLocation = { { 752.0f, 457.0f }, { 290.0f, 55.0f } };
 
 @interface PaymentViewController ()
 
@@ -33,6 +33,8 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     NSString *termsAndConditions;
     NSString *restrictContent;
     NSString *fillInAllFieldsText;
+    NSString *appleIdPassword;
+    NSString *warning;
     NSInteger rentalFee;
     NSInteger preAuthAmount;
     NSDictionary *notifications;
@@ -53,6 +55,15 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     appDelegate.paymentViewController = self;
     environmentURL = appDelegate.environmentURL;
+    
+    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+        // iOS 7
+        [self prefersStatusBarHidden];
+        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+    } else {
+        // iOS 6
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+    }
     
     self.locationDetailField.delegate = self;
     self.nameField.delegate = self;
@@ -96,6 +107,11 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     });
     
     [self updateLabels];
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -321,6 +337,8 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
     termsAndConditions = res[@"terms_and_conditions"];
     self.termsAndConditionsTextView.text = termsAndConditions;
     notifications = res[@"notifications"];
+    appleIdPassword = res[@"apple_id_password"];
+    warning = res[@"warning"];
     
     NSDictionary *taxes = res[@"taxes"];
     tax = 0;
@@ -559,8 +577,12 @@ const CGRect StripeLandscapeLocation = { { 708.0f, 439.0f }, { 290.0f, 55.0f } }
         controller.locationName = locationName;
         controller.email = self.emailField.text;
         controller.endDateString = formattedEndDateString;
+        controller.appleIdPassword = appleIdPassword;
+        controller.warning = warning;
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         appDelegate.endDate = endDate;
+        [self.locationDetailField becomeFirstResponder];
+        [self.locationDetailField resignFirstResponder];
     }
 }
 

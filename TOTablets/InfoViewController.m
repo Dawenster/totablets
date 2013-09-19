@@ -29,10 +29,13 @@
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     environmentURL = appDelegate.environmentURL;
     
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+    
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     [self loadImages:self.interfaceOrientation];
     if (UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
-        self.scrollView.frame = CGRectMake(0, -20, 768, 1024);
+        self.scrollView.frame = CGRectMake(0, 0, 768, 1024);
     } else {
         self.scrollView.frame = CGRectMake(0, 255, 1024, 768);
     }

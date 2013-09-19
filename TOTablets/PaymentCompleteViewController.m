@@ -9,8 +9,8 @@
 #import "PaymentCompleteViewController.h"
 #import "AppDelegate.h"
 
-const CGRect AlertPortraitLocation = { { 200.0f, 510.0f }, { 486.0f, 89.0f } };
-const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
+const CGRect AlertPortraitLocation = { { 170.0f, 508.0f }, { 500.0f, 300.0f } };
+const CGRect AlertLandscapeLocation = { { 170.0f, 555.0f }, { 730.0f, 150.0f } };
 
 @interface PaymentCompleteViewController ()
 
@@ -40,6 +40,15 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
     appDelegate.paymentCompleteViewController = self;
     environmentURL = appDelegate.environmentURL;
     
+    if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
+        // iOS 7
+        [self prefersStatusBarHidden];
+        [self performSelector:@selector(setNeedsStatusBarAppearanceUpdate)];
+    } else {
+        // iOS 6
+        [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+    }
+    
     self.finishRental.hidden = YES;
     self.upArrow.hidden = YES;
     self.leftArrow.hidden = YES;
@@ -48,13 +57,14 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
     
     [self updateLabels];
     
-    if (!UIInterfaceOrientationIsPortrait(self.interfaceOrientation)) {
-        self.signOutWarning.frame = AlertLandscapeLocation;
-    }
-    
     timer = [NSTimer scheduledTimerWithTimeInterval: 1.0 target:self selector:@selector(updateCountdown) userInfo:nil repeats: YES];
     
     secondsRemaining = 60;
+}
+
+- (BOOL)prefersStatusBarHidden
+{
+    return YES;
 }
 
 - (void)didReceiveMemoryWarning
@@ -68,6 +78,10 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
     self.titleLabel.text = [NSString stringWithFormat:@"Thank you, %@, for renting with %@ :)", self.customerName, self.locationName];
     self.emailLabel.text = [NSString stringWithFormat:@"Your receipt has been emailed to %@", self.email];
     self.endDateLabel.text = [NSString stringWithFormat:@"You have this iPad until %@", self.endDateString];
+    self.warningLabel.text = self.warning;
+    self.passwordLabel.text = [NSString stringWithFormat:@"'%@'", self.appleIdPassword];
+    
+//    [self.signOutWarningLabel sizeToFit];
 }
 
 - (void)updateCountdown
@@ -118,25 +132,19 @@ const CGRect AlertLandscapeLocation = { { 200.0f, 800.0f }, { 486.0f, 89.0f } };
         if (secondsRemaining < 0) {
             self.leftArrow.hidden = NO;
         }
-        self.signOutWarning.frame = AlertLandscapeLocation;
     } else if (toInterfaceOrientation == UIInterfaceOrientationLandscapeRight) {
         if (secondsRemaining < 0) {
             self.rightArrow.hidden = NO;
         }
-        self.signOutWarning.frame = AlertLandscapeLocation;
     } else if (toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) {
         if (secondsRemaining < 0) {
             self.upArrow.hidden = NO;
         }
-        self.signOutWarning.frame = AlertPortraitLocation;
     } else {
         if (secondsRemaining < 0) {
             self.bottomArrow.hidden = NO;
         }
-        self.signOutWarning.frame = AlertPortraitLocation;
     }
-    
-    [self.signOutWarning setNeedsDisplay];
 }
 
 - (void)finishRentalLock

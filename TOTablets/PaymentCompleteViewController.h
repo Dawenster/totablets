@@ -24,13 +24,16 @@
 @property (nonatomic, strong) IBOutlet UILabel *messageLabel;
 @property (nonatomic, strong) IBOutlet UILabel *rentalStartLabel;
 @property (nonatomic, strong) IBOutlet UILabel *secondsLabel;
-@property (nonatomic, strong) IBOutlet UIView *signOutWarning;
 @property (nonatomic, strong) IBOutlet UIButton *finishRental;
 @property (nonatomic, strong) IBOutlet UIImageView *upArrow;
 @property (nonatomic, strong) IBOutlet UIImageView *bottomArrow;
 @property (nonatomic, strong) IBOutlet UIImageView *leftArrow;
 @property (nonatomic, strong) IBOutlet UIImageView *rightArrow;
 @property (nonatomic, strong) NSMutableData *responseData;
+@property (nonatomic, strong) NSString *appleIdPassword;
+@property (nonatomic, strong) NSString *warning;
+@property (nonatomic, strong) IBOutlet UILabel *warningLabel;
+@property (nonatomic, strong) IBOutlet UILabel *passwordLabel;
 
 - (IBAction)finishRentalLock;
 

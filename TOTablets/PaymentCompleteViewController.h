@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 
-@interface PaymentCompleteViewController : UIViewController <UIAlertViewDelegate> {
+@interface PaymentCompleteViewController : UIViewController <UIAlertViewDelegate, UITextFieldDelegate> {
     MBProgressHUD *HUD;
 }
 
@@ -34,6 +34,7 @@
 @property (nonatomic, strong) NSString *warning;
 @property (nonatomic, strong) IBOutlet UILabel *warningLabel;
 @property (nonatomic, strong) IBOutlet UILabel *passwordLabel;
+@property (nonatomic, strong) NSString *adminPassword;
 
 - (IBAction)finishRentalLock;
 

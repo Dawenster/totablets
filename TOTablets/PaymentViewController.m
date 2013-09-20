@@ -200,6 +200,8 @@ const CGRect StripeLandscapeLocation = { { 752.0f, 457.0f }, { 290.0f, 55.0f } }
         self.payButton.enabled = NO;
         self.fillInAllFieldsLabel.text = fillInAllFieldsText;
     }
+    [self.locationDetailField becomeFirstResponder];
+    [self.locationDetailField resignFirstResponder];
 }
 
 - (UIPopoverController *)adminPopoverController
@@ -355,17 +357,21 @@ const CGRect StripeLandscapeLocation = { { 752.0f, 457.0f }, { 290.0f, 55.0f } }
 
 - (IBAction)pay;
 {
-    [self.view endEditing:YES];
     self.payButton.enabled = NO;
     self.stepper.enabled = NO;
     self.adultContentSwitch.enabled = NO;
     self.cancelButton.enabled = NO;
     self.adminButton.enabled = NO;
+    [self.locationDetailField becomeFirstResponder];
+    [self.locationDetailField resignFirstResponder];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onKeyboardHide:) name:UIKeyboardDidHideNotification object:nil];
     
     if ([self reachable]) {
         HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         HUD.labelText = @"Processing payment";
         dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+            [self.locationDetailField becomeFirstResponder];
+            [self.locationDetailField resignFirstResponder];
             dispatch_async(dispatch_get_main_queue(), ^{
                 self.responseData = [NSMutableData data];
                 [self stripeCall];
@@ -375,6 +381,24 @@ const CGRect StripeLandscapeLocation = { { 752.0f, 457.0f }, { 290.0f, 55.0f } }
         [self noConnectionError];
     }
 }
+
+//-(void)onKeyboardHide:(NSNotification *)notification
+//{
+//    if ([self reachable]) {
+//        HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//        HUD.labelText = @"Processing payment";
+//        dispatch_async(dispatch_get_global_queue( DISPATCH_QUEUE_PRIORITY_LOW, 0), ^{
+//            [self.locationDetailField becomeFirstResponder];
+//            [self.locationDetailField resignFirstResponder];
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                self.responseData = [NSMutableData data];
+//                [self stripeCall];
+//            });
+//        });
+//    } else {
+//        [self noConnectionError];
+//    }
+//}
 
 - (void)stripeCall
 {
@@ -579,10 +603,9 @@ const CGRect StripeLandscapeLocation = { { 752.0f, 457.0f }, { 290.0f, 55.0f } }
         controller.endDateString = formattedEndDateString;
         controller.appleIdPassword = appleIdPassword;
         controller.warning = warning;
+        controller.adminPassword = adminPassword;
         AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
         appDelegate.endDate = endDate;
-        [self.locationDetailField becomeFirstResponder];
-        [self.locationDetailField resignFirstResponder];
     }
 }
 

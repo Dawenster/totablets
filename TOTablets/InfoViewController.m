@@ -19,6 +19,7 @@
     int offsetAmount;
     NSTimer *timer;
     NSString *environmentURL;
+    NSString *adminPassword;
 }
 
 - (void)viewDidLoad
@@ -40,6 +41,7 @@
         self.scrollView.frame = CGRectMake(0, 255, 1024, 768);
     }
     timer = [NSTimer scheduledTimerWithTimeInterval:5.0 target:self selector:@selector(onTimer) userInfo:nil repeats:YES];
+    [self locationInfo];
 }
 
 - (void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -115,27 +117,47 @@
 
 - (void)finishRentalLock
 {
-    [self areYouSure];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Return device"
+                                                        message:@"Please enter password"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Return", nil];
+    
+    alertView.alertViewStyle = UIAlertViewStyleSecureTextInput;
+    [alertView show];
 }
 
-- (void)areYouSure
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Confirm End of Rental"
-                                                      message:@"Are you sure you want to end this rental and lock this device?"
-                                                     delegate:self
-                                            cancelButtonTitle:NSLocalizedString(@"No", @"No")
-                                            otherButtonTitles:@"Yes", nil];
-    [message show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1)
-    {
+    UITextField *textField = [alertView textFieldAtIndex:0];
+    
+    if (buttonIndex == 1 && [textField.text isEqualToString:adminPassword]) {
         HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         HUD.labelText = @"Ending current rental and locking device";
         [self adminCommand:@"lock"];
+    } else if (buttonIndex == 1) {
+        HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        HUD.labelText = @"Incorrect password - please try again";
+        [HUD hide:YES afterDelay:3];
     }
+}
+
+- (void)locationInfo
+{
+    NSString *deviceUDID = [[UIDevice currentDevice] name];
+    self.responseData = [NSMutableData data];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/location_info", environmentURL];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+    request.HTTPMethod = @"POST";
+    NSString *body     = [NSString stringWithFormat:@"ipad_name=%@", deviceUDID];
+    NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"Escaped Body: %@", escapedBody);
+    
+    request.HTTPBody = [escapedBody dataUsingEncoding:NSUTF8StringEncoding];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSLog(@"Connection description: %@",connection.description);
 }
 
 - (void)adminCommand:(NSString *)command
@@ -175,13 +197,20 @@
     NSLog(@"connectionDidFinishLoading");
     NSLog(@"Succeeded! Received %d bytes of data",[self.responseData length]);
     
-    HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
-    HUD.mode = MBProgressHUDModeCustomView;
-    HUD.labelText = @"Device will lock itself shortly.";
-    [HUD hide:YES afterDelay:3];
+    NSError *myError = nil;
+    NSDictionary *res = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&myError];
     
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    appDelegate.endDate = [NSDate date];
+    if ([res[@"admin_password"] length] > 0) {
+        adminPassword = res[@"admin_password"];
+    } else {
+        HUD.customView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"37x-Checkmark.png"]];
+        HUD.mode = MBProgressHUDModeCustomView;
+        HUD.labelText = @"Device will lock itself shortly.";
+        [HUD hide:YES afterDelay:3];
+        
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        appDelegate.endDate = [NSDate date];
+    }
 }
 
 - (void)noConnectionError

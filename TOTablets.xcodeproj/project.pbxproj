@@ -822,18 +822,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8016467A315A4C2787C2C935 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					armv7,
-					armv6,
-					"$(ARCHS_STANDARD)",
-				);
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TOTablets/TOTablets-Prefix.pch";
 				INFOPLIST_FILE = "TOTablets/TOTablets-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv6 armv7";
+				VALID_ARCHS = "armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -842,18 +838,14 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8016467A315A4C2787C2C935 /* Pods.xcconfig */;
 			buildSettings = {
-				ARCHS = (
-					armv7,
-					armv6,
-					"$(ARCHS_STANDARD)",
-				);
+				ARCHS = "$(ARCHS_STANDARD)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "TOTablets/TOTablets-Prefix.pch";
 				INFOPLIST_FILE = "TOTablets/TOTablets-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				VALID_ARCHS = "armv6 armv7";
+				VALID_ARCHS = "armv7s armv7";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

@@ -40,6 +40,8 @@ const CGRect AlertLandscapeLocation = { { 170.0f, 555.0f }, { 730.0f, 150.0f } }
     appDelegate.paymentCompleteViewController = self;
     environmentURL = appDelegate.environmentURL;
     
+    [self.view endEditing:YES];
+    
     if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
         // iOS 7
         [self prefersStatusBarHidden];
@@ -59,7 +61,7 @@ const CGRect AlertLandscapeLocation = { { 170.0f, 555.0f }, { 730.0f, 150.0f } }
     
     timer = [NSTimer scheduledTimerWithTimeInterval: 1.0 target:self selector:@selector(updateCountdown) userInfo:nil repeats: YES];
     
-    secondsRemaining = 60;
+    secondsRemaining = 3;
 }
 
 - (BOOL)prefersStatusBarHidden
@@ -149,26 +151,28 @@ const CGRect AlertLandscapeLocation = { { 170.0f, 555.0f }, { 730.0f, 150.0f } }
 
 - (void)finishRentalLock
 {
-    [self areYouSure];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Return device"
+                                                        message:@"Please enter password"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Cancel"
+                                              otherButtonTitles:@"Return", nil];
+    
+    alertView.alertViewStyle = UIAlertViewStyleSecureTextInput;
+    [alertView show];
 }
 
-- (void)areYouSure
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    UIAlertView *message = [[UIAlertView alloc] initWithTitle:@"Confirm End of Rental"
-                                                      message:@"Are you sure you want to end this rental and lock this device?"
-                                                     delegate:self
-                                            cancelButtonTitle:NSLocalizedString(@"No", @"No")
-                                            otherButtonTitles:@"Yes", nil];
-    [message show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == 1)
-    {
+    UITextField *textField = [alertView textFieldAtIndex:0];
+    
+    if (buttonIndex == 1 && [textField.text isEqualToString:self.adminPassword]) {
         HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
         HUD.labelText = @"Ending current rental and locking device";
         [self adminCommand:@"lock"];
+    } else if (buttonIndex == 1) {
+        HUD = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        HUD.labelText = @"Incorrect password - please try again";
+        [HUD hide:YES afterDelay:3];
     }
 }
 

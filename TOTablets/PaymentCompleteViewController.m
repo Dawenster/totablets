@@ -40,8 +40,6 @@ const CGRect AlertLandscapeLocation = { { 170.0f, 555.0f }, { 730.0f, 150.0f } }
     appDelegate.paymentCompleteViewController = self;
     environmentURL = appDelegate.environmentURL;
     
-    [self.view endEditing:YES];
-    
     if ([self respondsToSelector:@selector(setNeedsStatusBarAppearanceUpdate)]) {
         // iOS 7
         [self prefersStatusBarHidden];
@@ -61,7 +59,7 @@ const CGRect AlertLandscapeLocation = { { 170.0f, 555.0f }, { 730.0f, 150.0f } }
     
     timer = [NSTimer scheduledTimerWithTimeInterval: 1.0 target:self selector:@selector(updateCountdown) userInfo:nil repeats: YES];
     
-    secondsRemaining = 3;
+    secondsRemaining = 60;
 }
 
 - (BOOL)prefersStatusBarHidden

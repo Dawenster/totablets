@@ -89,6 +89,7 @@ const CGRect AlertLandscapeLocation = { { 170.0f, 555.0f }, { 730.0f, 150.0f } }
     if (secondsRemaining > 9) {
         self.timerLabel.text = [NSString stringWithFormat:@"%d", secondsRemaining];
     } else if (secondsRemaining == 1) {
+        [self installApps];
         self.secondsLabel.text = @"second.";
         self.timerLabel.text = [NSString stringWithFormat:@"0%d", secondsRemaining];
     } else {
@@ -183,6 +184,24 @@ const CGRect AlertLandscapeLocation = { { 170.0f, 555.0f }, { 730.0f, 150.0f } }
     NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
     request.HTTPMethod = @"POST";
     NSString *body     = [NSString stringWithFormat:@"ipad_name=%@&command=%@&origin=%@", deviceUDID, command, @"finish_rental"];
+    NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSLog(@"Escaped Body: %@", escapedBody);
+    
+    request.HTTPBody = [escapedBody dataUsingEncoding:NSUTF8StringEncoding];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
+    NSLog(@"Connection description: %@",connection.description);
+}
+
+- (void)installApps
+{
+    NSString *deviceUDID = [[UIDevice currentDevice] name];
+    self.responseData = [NSMutableData data];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/install_apps", environmentURL];
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+    request.HTTPMethod = @"POST";
+    NSString *body     = [NSString stringWithFormat:@"ipad_name=%@", deviceUDID];
     NSString *escapedBody = [body stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
     NSLog(@"Escaped Body: %@", escapedBody);

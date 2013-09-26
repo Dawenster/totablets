@@ -234,15 +234,21 @@ const CGRect AlertLandscapeLocation = { { 170.0f, 555.0f }, { 730.0f, 150.0f } }
     HUD.mode = MBProgressHUDModeCustomView;
     HUD.labelText = @"Device will lock itself shortly.";
     
-    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-    appDelegate.endDate = [NSDate date];
+    // convert to JSON
+    NSError *myError = nil;
+    NSDictionary *res = [NSJSONSerialization JSONObjectWithData:self.responseData options:NSJSONReadingMutableLeaves error:&myError];
     
-    [appDelegate.paymentCompleteViewController dismissViewControllerAnimated:YES completion:nil];
-    double delayInSeconds = 1.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [appDelegate.paymentViewController dismissViewControllerAnimated:YES completion:nil];
-    });
+    if ([res[@"command"] isEqualToString:@"lock"]) {
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+        appDelegate.endDate = [NSDate date];
+        
+        [appDelegate.paymentCompleteViewController dismissViewControllerAnimated:YES completion:nil];
+        double delayInSeconds = 1.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [appDelegate.paymentViewController dismissViewControllerAnimated:YES completion:nil];
+        });
+    }
 }
 
 - (void)noConnectionError
